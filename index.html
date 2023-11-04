@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System rezerwacji do fryzjera</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel=“shortcut” href="icons/favicon.ico" type="image/x-ico">
+    <script src="scripts/script.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid&family=Rubik&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+</head>
+
+<body>
+    <div id="nav">
+        Zakład fryzjerski
+    </div>
+    <div id="calendar">
+
+        <div id="select-week">
+            <span id="week" onclick="getCurrentDate()">Wybrany tydzień</span><br>
+            <div id="slider">
+                <div id="left" onclick="weekBack()"><button class="material-symbols-outlined change-week">
+                        arrow_back_ios_new</button>
+                </div>
+
+                <div id="date"></div>
+
+                <div id="right" onclick="weekForward()">
+                    <button class="material-symbols-outlined change-week">
+                        arrow_forward_ios
+                    </button></div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+
+        <div id="cal-nav">
+            <span class="cal-nav-text">Godzina</span>
+            <span class="cal-nav-text">Poniedziałek</span>
+            <span class="cal-nav-text">Wtorek</span>
+            <span class="cal-nav-text">Środa</span>
+            <span class="cal-nav-text">Czwartek</span>
+            <span class="cal-nav-text">Piątek</span>
+            <div style="clear: both;"></div>
+        </div>
+        <div id="columns">
+
+            <div class="column hours">
+                <div class="hour">08:00</div>
+                <div class="hour">09:00</div>
+                <div class="hour">10:00</div>
+                <div class="hour">11:00</div>
+                <div class="hour">12:00</div>
+                <div class="hour">13:00</div>
+                <div class="hour">14:00</div>
+                <div class="hour">15:00</div>
+                <div class="hour">16:00</div>
+                <div class="hour">17:00</div>
+            </div>
+
+            <div class="column pon">
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+            </div>
+
+            <div class="column wt">
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+            </div>
+
+            <div class="column sr">
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+            </div>
+
+            <div class="column czw">
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+            </div>
+
+            <div class="column pt">
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+                <div class="hour">Wolne</div>
+            </div>
+            <div style="clear: both;"></div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

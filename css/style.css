@@ -1,0 +1,162 @@
+body {
+    /* background-color: rgb(238, 238, 238); */
+    background-image: url('/icons/tło.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Rubik', sans-serif;
+}
+
+#nav {
+    font-size: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    line-height: 45px;
+    background-color: aqua;
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 25px;
+    border-radius: 10px;
+}
+
+#calendar {
+    padding: 10px;
+    width: 90%;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.219);
+    border-radius: 5px;
+}
+
+.column {
+    float: left;
+    width: 15%;
+    margin: auto;
+}
+
+#columns {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.hours {
+    line-height: 40px;
+    text-align: center;
+}
+
+.hours .hour {
+    background-color: rgb(236, 253, 255);
+}
+
+#cal-nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+.cal-nav-text {
+    background-color: rgb(171, 238, 255);
+    padding: 10px;
+    font-size: 25px;
+    text-align: center;
+    width: 15%;
+    margin: 3px;
+    display: block;
+    float: left;
+    border: 1px black solid;
+}
+
+.hour {
+    margin: 5px;
+    text-align: center;
+    line-height: 40px;
+    height: 40px;
+    border: 1px solid black;
+}
+
+.column:not(.hours) .hour:hover {
+    box-shadow: inset 0 0 10px 1px rgba(0, 0, 0, 0.493);
+}
+
+.pon .hour,
+.wt .hour,
+.sr .hour,
+.pt .hour,
+.czw .hour {
+    background-color: rgb(255, 255, 255);
+}
+
+#left,
+#right,
+#date {
+
+    float: left;
+}
+
+#select-week {
+    background-color: azure;
+    margin: auto;
+    margin-bottom: 15px;
+    text-align: center;
+    justify-content: center;
+    padding: 10px;
+
+}
+
+#week {
+    font-size: 25px;
+    margin: 5px;
+}
+
+#slider {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+#date {
+    margin: 0 10px 0 10px;
+    width: 19%;
+}
+
+.custom-week-input {
+    display: inline-block;
+    position: relative;
+}
+
+.custom-week-input input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.custom-week-input .styled-input {
+    /* Stylizuj tu odpowiednio zamiennik input */
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.change-week {
+    user-select: none;
+    cursor: pointer;
+    background-color: azure;
+    color: #050505;
+    padding: 7px 0 0 0;
+    border: none;
+    border-radius: 5px;
+}
