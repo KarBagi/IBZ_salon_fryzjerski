@@ -23,24 +23,24 @@
     <div id="calendar">
 
         <div id="select-week">
-            <span id="week" onclick="getCurrentDate()">Wybrany tydzień</span><br>
+            <span id="week">Wybrany tydzień</span><br>
             <div id="slider">
-                <div id="left" onclick="weekBack()"><button class="material-symbols-outlined change-week">
-                        arrow_back_ios_new</button>
-                </div>
+
+                <button onclick="weekBack()" id="left"
+                    class="material-symbols-outlined change-week">arrow_back_ios_new</button>
 
                 <div id="date"></div>
 
-                <div id="right" onclick="weekForward()">
-                    <button class="material-symbols-outlined change-week">
-                        arrow_forward_ios
-                    </button></div>
+                <button onclick="weekForward()" id="right"
+                    class="material-symbols-outlined change-week">arrow_forward_ios</button>
+
                 <div style="clear: both;"></div>
             </div>
+            <span id="reset-week" onclick="getCurrentDate()">aktualny tydzień</span>
         </div>
 
         <div id="cal-nav">
-            <span class="cal-nav-text">Godzina</span>
+            <span class="cal-nav-text hour-text">Godzina</span>
             <span class="cal-nav-text">Poniedziałek</span>
             <span class="cal-nav-text">Wtorek</span>
             <span class="cal-nav-text">Środa</span>
@@ -51,19 +51,21 @@
         <div id="columns">
 
             <div class="column hours">
-                <div class="hour">08:00</div>
-                <div class="hour">09:00</div>
-                <div class="hour">10:00</div>
-                <div class="hour">11:00</div>
-                <div class="hour">12:00</div>
-                <div class="hour">13:00</div>
-                <div class="hour">14:00</div>
-                <div class="hour">15:00</div>
-                <div class="hour">16:00</div>
-                <div class="hour">17:00</div>
+                <div class="hour" style="margin-top: 20px;"><span>08:00</span></div>
+                <div class="hour"><span>09:00</span></div>
+                <div class="hour"><span>10:00</span></div>
+                <div class="hour"><span>11:00</span></div>
+                <div class="hour"><span>12:00</span></div>
+                <div class="hour"><span>13:00</span></div>
+                <div class="hour"><span>14:00</span></div>
+                <div class="hour"><span>15:00</span></div>
+                <div class="hour"><span>16:00</span></div>
+                <div class="hour"><span>17:00</span></div>
+                <div class="hour"><span>18:00</span></div>
             </div>
 
             <div class="column pon">
+                <div class="day" id="monday-date">30 paź</div>
                 <div class="hour">Wolne</div>
                 <div class="hour">Wolne</div>
                 <div class="hour">Wolne</div>
@@ -77,6 +79,7 @@
             </div>
 
             <div class="column wt">
+                <div class="day" id="tuesday-date">30 paź</div>
                 <div class="hour">Wolne</div>
                 <div class="hour">Wolne</div>
                 <div class="hour">Wolne</div>
@@ -90,6 +93,7 @@
             </div>
 
             <div class="column sr">
+                <div class="day" id="wednesday-date">30 paź</div>
                 <div class="hour">Wolne</div>
                 <div class="hour">Wolne</div>
                 <div class="hour">Wolne</div>
@@ -103,6 +107,7 @@
             </div>
 
             <div class="column czw">
+                <div class="day" id="thursday-date">30 paź</div>
                 <div class="hour">Wolne</div>
                 <div class="hour">Wolne</div>
                 <div class="hour">Wolne</div>
@@ -116,6 +121,7 @@
             </div>
 
             <div class="column pt">
+                <div class="day" id="friday-date">30 paź</div>
                 <div class="hour">Wolne</div>
                 <div class="hour">Wolne</div>
                 <div class="hour">Wolne</div>

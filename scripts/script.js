@@ -14,6 +14,12 @@ function updateCurrentWeek(now) {
     const lastDayFormatted = lastDayOfWeek.toLocaleDateString('pl-PL', options);
 
     dateElement.textContent = `${firstDayFormatted} - ${lastDayFormatted}`;
+
+    document.getElementById('monday-date').textContent = firstDayFormatted;
+    document.getElementById('tuesday-date').textContent = addDays(firstDayOfWeek, 1).toLocaleDateString('pl-PL', options);
+    document.getElementById('wednesday-date').textContent = addDays(firstDayOfWeek, 2).toLocaleDateString('pl-PL', options);
+    document.getElementById('thursday-date').textContent = addDays(firstDayOfWeek, 3).toLocaleDateString('pl-PL', options);
+    document.getElementById('friday-date').textContent = addDays(firstDayOfWeek, 4).toLocaleDateString('pl-PL', options);
 }
 
 window.onload = getCurrentDate;
