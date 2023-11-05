@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>System rezerwacji do fryzjera</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel=“shortcut” href="icons/favicon.ico" type="image/x-ico">
@@ -13,12 +15,53 @@
     <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid&family=Rubik&display=swap" rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="icon" href="ikona.jpg" type="image/jpg">
 
 </head>
 
 <body>
+
+    <div class="modal-background" id="modalBackground">
+        <div class="modal">
+            <h2>Rezerwacja usługi</h2>
+
+            <div class="modalLi">Data: <input type="date" name="termin" id="termin" readonly></div><br>
+            <div class="modalLi">Godzina: <input type="time" name="czas" id="czas" readonly></div><br>
+            <div class="modalLi">Rodzaj usługi:
+                <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn" id="dropbutton">Wybierz</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <span onclick="setService(1)">Strzyżenie męskie</span>
+                        <span onclick="setService(2)">Strzyżenie damskie</span>
+                        <span onclick="setService(3)">Farbowanie</span>
+                    </div>
+                </div>
+            </div><br>
+
+            <button onclick="closeModal()">Anuluj</button>
+            <button onclick="closeModal()">Zapisz</button>
+        </div>
+    </div>
+
     <div id="nav">
-        Zakład fryzjerski
+        <p>Zakład fryzjerski</p>
+
+        <div class="navbarMenu">
+            <a href="#home">Strona główna</a>
+            <a href="#news">Aktualnści</a>
+            <div class="dropdownMenu">
+                <button class="dropbtnMenu">Cennik
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdownMenu-content">
+                    <a href="#">Kipa</a>
+                    <a href="#">Szulc</a>
+                    <a href="#">Bagiński</a>
+                </div>
+            </div>
+            <a href="#kontakt">Kontakt</a>
+        </div>
+
     </div>
     <div id="calendar">
 
@@ -65,73 +108,73 @@
             </div>
 
             <div class="column pon">
-                <div class="day" id="monday-date">30 paź</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
+                <div class="day" id="monday-date"></div>
+                <div class="hour" onclick="openModal(1,8)">Wolne</div>
+                <div class="hour" onclick="openModal(1,9)">Wolne</div>
+                <div class="hour" onclick="openModal(1,10)">Wolne</div>
+                <div class="hour" onclick="openModal(1,11)">Wolne</div>
+                <div class="hour" onclick="openModal(1,12)">Wolne</div>
+                <div class="hour" onclick="openModal(1,13)">Wolne</div>
+                <div class="hour" onclick="openModal(1,14)">Wolne</div>
+                <div class="hour" onclick="openModal(1,15)">Wolne</div>
+                <div class="hour" onclick="openModal(1,16)">Wolne</div>
+                <div class="hour" onclick="openModal(1,17)">Wolne</div>
             </div>
 
             <div class="column wt">
-                <div class="day" id="tuesday-date">30 paź</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
+                <div class="day" id="tuesday-date"></div>
+                <div class="hour" onclick="openModal(2,8)">Wolne</div>
+                <div class="hour" onclick="openModal(2,9)">Wolne</div>
+                <div class="hour" onclick="openModal(2,10)">Wolne</div>
+                <div class="hour" onclick="openModal(2,11)">Wolne</div>
+                <div class="hour" onclick="openModal(2,12)">Wolne</div>
+                <div class="hour" onclick="openModal(2,13)">Wolne</div>
+                <div class="hour" onclick="openModal(2,14)">Wolne</div>
+                <div class="hour" onclick="openModal(2,15)">Wolne</div>
+                <div class="hour" onclick="openModal(2,16)">Wolne</div>
+                <div class="hour" onclick="openModal(2,17)">Wolne</div>
             </div>
 
             <div class="column sr">
-                <div class="day" id="wednesday-date">30 paź</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
+                <div class="day" id="wednesday-date"></div>
+                <div class="hour" onclick="openModal(3,8)">Wolne</div>
+                <div class="hour" onclick="openModal(3,9)">Wolne</div>
+                <div class="hour" onclick="openModal(3,10)">Wolne</div>
+                <div class="hour" onclick="openModal(3,11)">Wolne</div>
+                <div class="hour" onclick="openModal(3,12)">Wolne</div>
+                <div class="hour" onclick="openModal(3,13)">Wolne</div>
+                <div class="hour" onclick="openModal(3,14)">Wolne</div>
+                <div class="hour" onclick="openModal(3,15)">Wolne</div>
+                <div class="hour" onclick="openModal(3,16)">Wolne</div>
+                <div class="hour" onclick="openModal(3,17)">Wolne</div>
             </div>
 
             <div class="column czw">
-                <div class="day" id="thursday-date">30 paź</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
+                <div class="day" id="thursday-date"></div>
+                <div class="hour" onclick="openModal(4,8)">Wolne</div>
+                <div class="hour" onclick="openModal(4,9)">Wolne</div>
+                <div class="hour" onclick="openModal(4,10)">Wolne</div>
+                <div class="hour" onclick="openModal(4,11)">Wolne</div>
+                <div class="hour" onclick="openModal(4,12)">Wolne</div>
+                <div class="hour" onclick="openModal(4,13)">Wolne</div>
+                <div class="hour" onclick="openModal(4,14)">Wolne</div>
+                <div class="hour" onclick="openModal(4,15)">Wolne</div>
+                <div class="hour" onclick="openModal(4,16)">Wolne</div>
+                <div class="hour" onclick="openModal(4,17)">Wolne</div>
             </div>
 
             <div class="column pt">
-                <div class="day" id="friday-date">30 paź</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
-                <div class="hour">Wolne</div>
+                <div class="day" id="friday-date"></div>
+                <div class="hour" onclick="openModal(5,8)">Wolne</div>
+                <div class="hour" onclick="openModal(5,9)">Wolne</div>
+                <div class="hour" onclick="openModal(5,10)">Wolne</div>
+                <div class="hour" onclick="openModal(5,11)">Wolne</div>
+                <div class="hour" onclick="openModal(5,12)">Wolne</div>
+                <div class="hour" onclick="openModal(5,13)">Wolne</div>
+                <div class="hour" onclick="openModal(5,14)">Wolne</div>
+                <div class="hour" onclick="openModal(5,15)">Wolne</div>
+                <div class="hour" onclick="openModal(5,16)">Wolne</div>
+                <div class="hour" onclick="openModal(5,17)">Wolne</div>
             </div>
             <div style="clear: both;"></div>
 
