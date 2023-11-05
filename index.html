@@ -24,22 +24,41 @@
     <div class="modal-background" id="modalBackground">
         <div class="modal">
             <h2>Rezerwacja usługi</h2>
-
-            <div class="modalLi">Data: <input type="date" name="termin" id="termin" readonly></div><br>
-            <div class="modalLi">Godzina: <input type="time" name="czas" id="czas" readonly></div><br>
-            <div class="modalLi">Rodzaj usługi:
-                <div class="dropdown">
-                    <button onclick="myFunction()" class="dropbtn" id="dropbutton">Wybierz</button>
-                    <div id="myDropdown" class="dropdown-content">
-                        <span onclick="setService(1)">Strzyżenie męskie</span>
-                        <span onclick="setService(2)">Strzyżenie damskie</span>
-                        <span onclick="setService(3)">Farbowanie</span>
-                    </div>
-                </div>
-            </div><br>
-
-            <button onclick="closeModal()">Anuluj</button>
-            <button onclick="closeModal()">Zapisz</button>
+            <table>
+                
+                <tr>
+                    <td><div class="modalLi">Data: </div></td><td><input type="date" name="termin" id="termin" readonly></td>
+                </tr>
+                <tr>
+                    <td><div class="modalLi">Godzina: </div></td><td><input type="time" name="czas" id="czas" readonly></td>
+                </tr>
+                <tr>
+                    <td><div class="modalLi">Usługa: </div></td><td><div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn" id="dropbutton">Wybierz</button>
+                        <div id="myDropdown" class="dropdown-content">
+                            <span onclick="setService(1)">Strzyżenie męskie</span>
+                            <span onclick="setService(2)">Strzyżenie damskie</span>
+                            <span onclick="setService(3)">Farbowanie</span>
+                        </div>
+                    </div></td>
+                </tr>
+                <tr>
+                    <td><div class="modalLi">Imię: </div></td><td><input type="text" name="imie" id="imie"></td>
+                </tr>
+                <tr>
+                    <td><div class="modalLi">Nazwisko: </div></td><td><input type="text" name="nazwisko" id="nazwisko"></td>
+                </tr>
+                <tr>
+                    <td><div class="modalLi">Nr telefonu: </div></td><td><input type="text" name="phone" id="phone"></td>
+                </tr>
+                <tr>
+                    <td><div class="modalLi">Email: </div></td><td><input type="text" name="email" id="email"></td>
+                </tr>
+            </table>
+            <div style="display: flex; justify-content: space-between;">
+                <button onclick="closeModal()" id="cancel" class="buttonModal">Anuluj</button>
+                <button onclick="saveModal()" id="save" class="buttonModal">Zapisz</button>
+            </div>
         </div>
     </div>
 
@@ -55,7 +74,7 @@
                 </button>
                 <div class="dropdownMenu-content">
                     <a href="#">Kipa</a>
-                    <a href="#">Szulc</a>
+                    <a href="#2137">Szulc</a>
                     <a href="#">Bagiński</a>
                 </div>
             </div>
@@ -109,72 +128,72 @@
 
             <div class="column pon">
                 <div class="day" id="monday-date"></div>
-                <div class="hour" onclick="openModal(1,8)">Wolne</div>
-                <div class="hour" onclick="openModal(1,9)">Wolne</div>
-                <div class="hour" onclick="openModal(1,10)">Wolne</div>
-                <div class="hour" onclick="openModal(1,11)">Wolne</div>
-                <div class="hour" onclick="openModal(1,12)">Wolne</div>
-                <div class="hour" onclick="openModal(1,13)">Wolne</div>
-                <div class="hour" onclick="openModal(1,14)">Wolne</div>
-                <div class="hour" onclick="openModal(1,15)">Wolne</div>
-                <div class="hour" onclick="openModal(1,16)">Wolne</div>
-                <div class="hour" onclick="openModal(1,17)">Wolne</div>
+                <div class="hour" day="0" hour="8" onclick="openModal(0,8,this)">Wolne</div>
+                <div class="hour" day="0" hour="9" onclick="openModal(0,9,this)">Wolne</div>
+                <div class="hour" day="0" hour="8" onclick="openModal(0,10,this)">Wolne</div>
+                <div class="hour" day="0" hour="11" onclick="openModal(0,11,this)">Wolne</div>
+                <div class="hour" day="0" hour="12" onclick="openModal(0,12,this)">Wolne</div>
+                <div class="hour" day="0" hour="13" onclick="openModal(0,13,this)">Wolne</div>
+                <div class="hour" day="0" hour="14" onclick="openModal(0,14,this)">Wolne</div>
+                <div class="hour" day="0" hour="15" onclick="openModal(0,15,this)">Wolne</div>
+                <div class="hour" day="0" hour="16" onclick="openModal(0,16,this)">Wolne</div>
+                <div class="hour" day="0" hour="17" onclick="openModal(0,17,this)">Wolne</div>
             </div>
 
             <div class="column wt">
                 <div class="day" id="tuesday-date"></div>
-                <div class="hour" onclick="openModal(2,8)">Wolne</div>
-                <div class="hour" onclick="openModal(2,9)">Wolne</div>
-                <div class="hour" onclick="openModal(2,10)">Wolne</div>
-                <div class="hour" onclick="openModal(2,11)">Wolne</div>
-                <div class="hour" onclick="openModal(2,12)">Wolne</div>
-                <div class="hour" onclick="openModal(2,13)">Wolne</div>
-                <div class="hour" onclick="openModal(2,14)">Wolne</div>
-                <div class="hour" onclick="openModal(2,15)">Wolne</div>
-                <div class="hour" onclick="openModal(2,16)">Wolne</div>
-                <div class="hour" onclick="openModal(2,17)">Wolne</div>
+                <div class="hour" day="1" hour="8" onclick="openModal(1,8,this)">Wolne</div>
+                <div class="hour" day="1" hour="9" onclick="openModal(1,9,this)">Wolne</div>
+                <div class="hour" day="1" hour="10" onclick="openModal(1,10,this)">Wolne</div>
+                <div class="hour" day="1" hour="11" onclick="openModal(1,11,this)">Wolne</div>
+                <div class="hour" day="1" hour="12" onclick="openModal(1,12,this)">Wolne</div>
+                <div class="hour" day="1" hour="13" onclick="openModal(1,13,this)">Wolne</div>
+                <div class="hour" day="1" hour="14" onclick="openModal(1,14,this)">Wolne</div>
+                <div class="hour" day="1" hour="15" onclick="openModal(1,15,this)">Wolne</div>
+                <div class="hour" day="1" hour="16" onclick="openModal(1,16,this)">Wolne</div>
+                <div class="hour" day="1" hour="17" onclick="openModal(1,17,this)">Wolne</div>
             </div>
 
             <div class="column sr">
                 <div class="day" id="wednesday-date"></div>
-                <div class="hour" onclick="openModal(3,8)">Wolne</div>
-                <div class="hour" onclick="openModal(3,9)">Wolne</div>
-                <div class="hour" onclick="openModal(3,10)">Wolne</div>
-                <div class="hour" onclick="openModal(3,11)">Wolne</div>
-                <div class="hour" onclick="openModal(3,12)">Wolne</div>
-                <div class="hour" onclick="openModal(3,13)">Wolne</div>
-                <div class="hour" onclick="openModal(3,14)">Wolne</div>
-                <div class="hour" onclick="openModal(3,15)">Wolne</div>
-                <div class="hour" onclick="openModal(3,16)">Wolne</div>
-                <div class="hour" onclick="openModal(3,17)">Wolne</div>
+                <div class="hour" day="2" hour="8" onclick="openModal(2,8,this)">Wolne</div>
+                <div class="hour" day="2" hour="9" onclick="openModal(2,9,this)">Wolne</div>
+                <div class="hour" day="2" hour="10" onclick="openModal(2,10,this)">Wolne</div>
+                <div class="hour" day="2" hour="11" onclick="openModal(2,11,this)">Wolne</div>
+                <div class="hour" day="2" hour="12" onclick="openModal(2,12,this)">Wolne</div>
+                <div class="hour" day="2" hour="13" onclick="openModal(2,13,this)">Wolne</div>
+                <div class="hour" day="2" hour="14" onclick="openModal(2,14,this)">Wolne</div>
+                <div class="hour" day="2" hour="15" onclick="openModal(2,15,this)">Wolne</div>
+                <div class="hour" day="2" hour="16" onclick="openModal(2,16,this)">Wolne</div>
+                <div class="hour" day="2" hour="17" onclick="openModal(2,17,this)">Wolne</div>
             </div>
 
             <div class="column czw">
                 <div class="day" id="thursday-date"></div>
-                <div class="hour" onclick="openModal(4,8)">Wolne</div>
-                <div class="hour" onclick="openModal(4,9)">Wolne</div>
-                <div class="hour" onclick="openModal(4,10)">Wolne</div>
-                <div class="hour" onclick="openModal(4,11)">Wolne</div>
-                <div class="hour" onclick="openModal(4,12)">Wolne</div>
-                <div class="hour" onclick="openModal(4,13)">Wolne</div>
-                <div class="hour" onclick="openModal(4,14)">Wolne</div>
-                <div class="hour" onclick="openModal(4,15)">Wolne</div>
-                <div class="hour" onclick="openModal(4,16)">Wolne</div>
-                <div class="hour" onclick="openModal(4,17)">Wolne</div>
+                <div class="hour" day="3" hour="8" onclick="openModal(3,8,this)">Wolne</div>
+                <div class="hour" day="3" hour="9" onclick="openModal(3,9,this)">Wolne</div>
+                <div class="hour" day="3" hour="10" onclick="openModal(3,10,this)">Wolne</div>
+                <div class="hour" day="3" hour="11" onclick="openModal(3,11,this)">Wolne</div>
+                <div class="hour" day="3" hour="12" onclick="openModal(3,12,this)">Wolne</div>
+                <div class="hour" day="3" hour="13" onclick="openModal(3,13,this)">Wolne</div>
+                <div class="hour" day="3" hour="14" onclick="openModal(3,14,this)">Wolne</div>
+                <div class="hour" day="3" hour="15" onclick="openModal(3,15,this)">Wolne</div>
+                <div class="hour" day="3" hour="16" onclick="openModal(3,16,this)">Wolne</div>
+                <div class="hour" day="3" hour="17" onclick="openModal(3,17,this)">Wolne</div>
             </div>
 
             <div class="column pt">
                 <div class="day" id="friday-date"></div>
-                <div class="hour" onclick="openModal(5,8)">Wolne</div>
-                <div class="hour" onclick="openModal(5,9)">Wolne</div>
-                <div class="hour" onclick="openModal(5,10)">Wolne</div>
-                <div class="hour" onclick="openModal(5,11)">Wolne</div>
-                <div class="hour" onclick="openModal(5,12)">Wolne</div>
-                <div class="hour" onclick="openModal(5,13)">Wolne</div>
-                <div class="hour" onclick="openModal(5,14)">Wolne</div>
-                <div class="hour" onclick="openModal(5,15)">Wolne</div>
-                <div class="hour" onclick="openModal(5,16)">Wolne</div>
-                <div class="hour" onclick="openModal(5,17)">Wolne</div>
+                <div class="hour" day="4" hour="8" onclick="openModal(4,8,this)">Wolne</div>
+                <div class="hour" day="4" hour="9" onclick="openModal(4,9,this)">Wolne</div>
+                <div class="hour" day="4" hour="10" onclick="openModal(4,10,this)">Wolne</div>
+                <div class="hour" day="4" hour="11" onclick="openModal(4,11,this)">Wolne</div>
+                <div class="hour" day="4" hour="12" onclick="openModal(4,12,this)">Wolne</div>
+                <div class="hour" day="4" hour="13" onclick="openModal(4,13,this)">Wolne</div>
+                <div class="hour" day="4" hour="14" onclick="openModal(4,14,this)">Wolne</div>
+                <div class="hour" day="4" hour="15" onclick="openModal(4,15,this)">Wolne</div>
+                <div class="hour" day="4" hour="16" onclick="openModal(4,16,this)">Wolne</div>
+                <div class="hour" day="4" hour="17" onclick="openModal(4,17,this)">Wolne</div>
             </div>
             <div style="clear: both;"></div>
 
