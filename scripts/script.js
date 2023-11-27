@@ -6,6 +6,9 @@ var selectedDay = -1;
 var selectedHour = -1;
 var clickedDiv = null;
 
+var selectedFilter = 0;
+var selectedOption = 0;
+
 var wizyty = [
     { data: "2023-11-10", godzina: 10 },
     { data: "2023-11-8", godzina: 15 },
@@ -78,7 +81,12 @@ function setCalendar() {
 }
 
 
-window.onload = getCurrentDate;
+window.onload = onLoad;
+
+function onLoad() {
+    getCurrentDate();
+    updateSecondSelect();
+}
 
 function getCurrentDate() {
     currentWeek = 0;
@@ -147,24 +155,19 @@ function openModal(day, hour, div) {
     var hours = hour;
     var minutes = 0;
 
-    // Dodaj zero z przodu, jeśli liczba minut jest jednocyfrowa
     minutes = minutes < 10 ? "0" + minutes : minutes;
     hours = hours < 10 ? "0" + hours : hours;
-    // Ustaw godzinę i minutę w polu input
     timeInput.value = hours + ":" + minutes;
 
     var dateInput = document.getElementById("termin");
     var date = addDays(firstDayOfWeek, day);
 
-    // Ustaw wartość daty w formie tekstu (YYYY-MM-DD)
 
     var year = date.getFullYear();
 
-    // Dodaj zero z przodu, jeśli miesiąc lub dzień jest jednocyfrowy
     var month = (date.getMonth() + 1).toString().padStart(2, '0');
     var day = (date.getDate()).toString().padStart(2, '0');
 
-    // Ustaw datę w polu input
     selectedDay = year + "-" + month + "-" + day;
     dateInput.value = selectedDay;
 
@@ -188,13 +191,10 @@ function saveModal() {
     updateCurrentWeek(firstDayOfWeek);
 }
 
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
 }
 
-// Close the dropdown menu if the user clicks outside of it
 window.onclick = function (event) {
     if (!event.target.matches('.dropbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -224,4 +224,44 @@ function setService(service) {
 
     if (service == 3) { document.getElementById("dropbutton").textContent = "farbowanie" }
 
+}
+
+
+function updateSecondSelect() {
+    var firstSelect = document.getElementById("calendar_filter");
+    var secondSelect = document.getElementById("filter_items");
+
+    secondSelect.innerHTML = "";
+
+    switch (firstSelect.value) {
+        case "service":
+            selectedFilter = 0;
+            addOptionsToSecondSelect(["Strzyżenie męskie", "Strzyżenie damskie", "Farbowanie"]);
+            break;
+        case "worker":
+            selectedFilter = 1;
+            addOptionsToSecondSelect(["Szulc", "Bagiński", "Kipa"]);
+            break;
+        default:
+            break;
+    }
+}
+
+function addOptionsToSecondSelect(options) {
+    var secondSelect = document.getElementById("filter_items");
+    var i = 0;
+    options.forEach(function (optionText) {
+        var option = document.createElement("option");
+        option.text = optionText;
+        option.value = i;
+        secondSelect.add(option);
+        i++;
+    });
+    saveFilterOption();
+}
+
+function saveFilterOption() {
+    var secondSelect = document.getElementById("filter_items");
+    selectedOption=secondSelect.value;
+    console.log(selectedOption);
 }

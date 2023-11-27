@@ -25,34 +25,57 @@
         <div class="modal">
             <h2>Rezerwacja usługi</h2>
             <table>
-                
+
                 <tr>
-                    <td><div class="modalLi">Data: </div></td><td><input type="date" name="termin" id="termin" readonly></td>
+                    <td>
+                        <div class="modalLi">Data: </div>
+                    </td>
+                    <td><input type="date" name="termin" id="termin" readonly></td>
                 </tr>
                 <tr>
-                    <td><div class="modalLi">Godzina: </div></td><td><input type="time" name="czas" id="czas" readonly></td>
+                    <td>
+                        <div class="modalLi">Godzina: </div>
+                    </td>
+                    <td><input type="time" name="czas" id="czas" readonly></td>
                 </tr>
                 <tr>
-                    <td><div class="modalLi">Usługa: </div></td><td><div class="dropdown">
-                        <button onclick="myFunction()" class="dropbtn" id="dropbutton">Wybierz</button>
-                        <div id="myDropdown" class="dropdown-content">
-                            <span onclick="setService(1)">Strzyżenie męskie</span>
-                            <span onclick="setService(2)">Strzyżenie damskie</span>
-                            <span onclick="setService(3)">Farbowanie</span>
+                    <td>
+                        <div class="modalLi">Usługa: </div>
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <button onclick="myFunction()" class="dropbtn" id="dropbutton">Wybierz</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <span onclick="setService(1)">Strzyżenie męskie</span>
+                                <span onclick="setService(2)">Strzyżenie damskie</span>
+                                <span onclick="setService(3)">Farbowanie</span>
+                            </div>
                         </div>
-                    </div></td>
+                    </td>
                 </tr>
                 <tr>
-                    <td><div class="modalLi">Imię: </div></td><td><input type="text" name="imie" id="imie"></td>
+                    <td>
+                        <div class="modalLi">Imię: </div>
+                    </td>
+                    <td><input type="text" name="imie" id="imie"></td>
                 </tr>
                 <tr>
-                    <td><div class="modalLi">Nazwisko: </div></td><td><input type="text" name="nazwisko" id="nazwisko"></td>
+                    <td>
+                        <div class="modalLi">Nazwisko: </div>
+                    </td>
+                    <td><input type="text" name="nazwisko" id="nazwisko"></td>
                 </tr>
                 <tr>
-                    <td><div class="modalLi">Nr telefonu: </div></td><td><input type="text" name="phone" id="phone"></td>
+                    <td>
+                        <div class="modalLi">Nr telefonu: </div>
+                    </td>
+                    <td><input type="text" name="phone" id="phone"></td>
                 </tr>
                 <tr>
-                    <td><div class="modalLi">Email: </div></td><td><input type="text" name="email" id="email"></td>
+                    <td>
+                        <div class="modalLi">Email: </div>
+                    </td>
+                    <td><input type="text" name="email" id="email"></td>
                 </tr>
             </table>
             <div style="display: flex; justify-content: space-between;">
@@ -87,6 +110,15 @@
         <div id="select-week">
             <span id="week">Wybrany tydzień</span><br>
             <div id="slider">
+                <div id="filter">Filtrowanie wg:
+                    <select name="calendar_option" id="calendar_filter" onchange="updateSecondSelect()">
+                        <option value="service">Usługa</option>
+                        <option value="worker">Fryzjer</option>
+                    </select><br>
+                    Opcja: 
+                    <select name="filtering_items" id="filter_items" onchange="saveFilterOption()">
+                    </select>
+                </div>
 
                 <button onclick="weekBack()" id="left"
                     class="material-symbols-outlined change-week">arrow_back_ios_new</button>
@@ -96,6 +128,7 @@
                 <button onclick="weekForward()" id="right"
                     class="material-symbols-outlined change-week">arrow_forward_ios</button>
 
+                <div style="float: left; width: 30%;"></div>
                 <div style="clear: both;"></div>
             </div>
             <span id="reset-week" onclick="getCurrentDate()">aktualny tydzień</span>
@@ -199,6 +232,10 @@
 
         </div>
 
+    </div>
+
+    <div id="footer">
+        Strona rezerwacji do fryzjera na Projekt z internetowych baz danych. Autorzy: Szulc, Bagiński, Kipa.
     </div>
 
 </body>

@@ -8,6 +8,7 @@ c5: #0d47a1;
 
 
 body {
+    margin: 0;
     background-image: url('/icons/tło.jpg');
     background-size: cover;
     background-attachment: fixed;
@@ -146,6 +147,32 @@ body {
     display: flex;
     justify-content: center;
     margin: auto;
+}
+
+#filter
+{
+    font-size: 20px;
+    float: left;
+    width: 30%;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+/* Dostosuj wygląd selecta */
+select {
+    width: max-content;
+    padding: 3px 10px 3px 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    margin-bottom: 5px;
 }
 
 #date {
@@ -371,4 +398,13 @@ border: 3px #d21957 solid;
 
 .dropdownMenu:hover .dropdownMenu-content {
     display: block;
+}
+
+#footer
+{
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    font-size: large;
+    margin-top: 40px;
 }
