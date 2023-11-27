@@ -24,64 +24,67 @@
     <div class="modal-background" id="modalBackground">
         <div class="modal">
             <h2>Rezerwacja usługi</h2>
-            <table>
+            <form action="zarezerwuj.php" id="modalForm" method="get" onsubmit="return saveModal()">
+                <table>
 
-                <tr>
-                    <td>
-                        <div class="modalLi">Data: </div>
-                    </td>
-                    <td><input type="date" name="termin" id="termin" readonly></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="modalLi">Godzina: </div>
-                    </td>
-                    <td><input type="time" name="czas" id="czas" readonly></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="modalLi">Usługa: </div>
-                    </td>
-                    <td>
-                        <div class="dropdown">
-                            <button onclick="myFunction()" class="dropbtn" id="dropbutton">Wybierz</button>
-                            <div id="myDropdown" class="dropdown-content">
-                                <span onclick="setService(1)">Strzyżenie męskie</span>
-                                <span onclick="setService(2)">Strzyżenie damskie</span>
-                                <span onclick="setService(3)">Farbowanie</span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="modalLi">Imię: </div>
-                    </td>
-                    <td><input type="text" name="imie" id="imie"></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="modalLi">Nazwisko: </div>
-                    </td>
-                    <td><input type="text" name="nazwisko" id="nazwisko"></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="modalLi">Nr telefonu: </div>
-                    </td>
-                    <td><input type="text" name="phone" id="phone"></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="modalLi">Email: </div>
-                    </td>
-                    <td><input type="text" name="email" id="email"></td>
-                </tr>
-            </table>
-            <div style="display: flex; justify-content: space-between;">
-                <button onclick="closeModal()" id="cancel" class="buttonModal">Anuluj</button>
-                <button onclick="saveModal()" id="save" class="buttonModal">Zapisz</button>
-            </div>
+                    <tr>
+                        <td>
+                            <div class="modalLi">Data: </div>
+                        </td>
+                        <td><input type="date" name="termin" id="termin" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="modalLi">Godzina: </div>
+                        </td>
+                        <td><input type="time" name="czas" id="czas" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="modalLi"><span id="usluga_text">Usługa:</span></div>
+                        </td>
+                        <td>
+                            <select id="opcja" onchange="onServiceSelectChange()">
+    
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="modalLi">Imię: </div>
+                        </td>
+                        <td><input type="text" name="imie" id="imie"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="modalLi">Nazwisko: </div>
+                        </td>
+                        <td><input type="text" name="nazwisko" id="nazwisko"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="modalLi">Nr telefonu: </div>
+                        </td>
+                        <td><input type="text" name="phone" id="phone"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="modalLi">Email: </div>
+                        </td>
+                        <td><input type="text" name="email" id="email"></td>
+                    </tr>
+                </table>
+                <input type="hidden" name="fryzjer" id="fryzjer">
+                <input type="hidden" name="usluga" id="usluga">
+                <div style="display: flex; justify-content: space-between;">
+                    <button onclick="closeModal()" id="cancel" class="buttonModal">Anuluj</button>
+                    <input type="submit" value="Zapisz" id="save" class="buttonModal">
+                
+                    <!-- <input type="submit" onclick="saveModal()" id="save" class="buttonModal">Zapisz</button> -->
+                </div>
+
+            </form>
+            
         </div>
     </div>
 
@@ -111,12 +114,12 @@
             <span id="week">Wybrany tydzień</span><br>
             <div id="slider">
                 <div id="filter">Filtrowanie wg:
-                    <select name="calendar_option" id="calendar_filter" onchange="updateSecondSelect()">
+                    <select name="calendar_option" id="calendar_filter" onchange="onFilterSelectChange()">
                         <option value="service">Usługa</option>
                         <option value="worker">Fryzjer</option>
                     </select><br>
                     Opcja: 
-                    <select name="filtering_items" id="filter_items" onchange="saveFilterOption()">
+                    <select name="filtering_items" id="filter_items" onchange="onOptionSelectChange()">
                     </select>
                 </div>
 

@@ -8,6 +8,17 @@ var clickedDiv = null;
 
 var selectedFilter = 0;
 var selectedOption = 0;
+var selectedInModal = 0;
+
+var uslugi = ["strzyżenie męskie", "strzyżenie damskie", "farbowanie"];
+var fryzjerzy = ["Szulc", "Bagiński", "Kipa"];
+
+var selectedName = "";
+var selectedSurname = "";
+var selectedPhone = "";
+var selectedEmail = "";
+var selectedService = uslugi[0];
+var selectedWorker = fryzjerzy[0];
 
 var wizyty = [
     { data: "2023-11-10", godzina: 10 },
@@ -18,6 +29,7 @@ var wizyty = [
     { data: "2023-12-1", godzina: 10 },
     { data: "2023-11-20", godzina: 16 }
 ];
+
 
 aktualne_wizyty = [];
 
@@ -85,7 +97,13 @@ window.onload = onLoad;
 
 function onLoad() {
     getCurrentDate();
-    updateSecondSelect();
+    onFilterSelectChange();
+
+    document.getElementById("modalForm").addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    });
 }
 
 function getCurrentDate() {
@@ -162,7 +180,6 @@ function openModal(day, hour, div) {
     var dateInput = document.getElementById("termin");
     var date = addDays(firstDayOfWeek, day);
 
-
     var year = date.getFullYear();
 
     var month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -173,82 +190,142 @@ function openModal(day, hour, div) {
 
 }
 
+function empty() {
+
+}
+
 function closeModal() {
     const modalBackground = document.getElementById('modalBackground');
     modalBackground.style.display = 'none';
-    document.getElementById("dropbutton").textContent = "Wybierz";
 }
 
 function saveModal() {
-    const modalBackground = document.getElementById('modalBackground');
-    modalBackground.style.display = 'none';
-    document.getElementById("dropbutton").textContent = "Wybierz";
-    clickedDiv.style.backgroundColor = "#b52121";
-    clickedDiv.textContent = "Zajęte";
-    wizyty.push({ data: selectedDay, godzina: selectedHour });
-    var selector = '.hour[hour="' + selectedHour + '"][day="' + new Date(selectedDay).getDay() + '"]';
-    aktualne_wizyty.push(selector);
-    updateCurrentWeek(firstDayOfWeek);
-}
 
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
+    var good = true;
 
-window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
-
-function setService(service) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-        }
+    if (document.getElementById("imie").value == "") {
+        good = false;
+        var imieInput = document.getElementById("imie");
+        showError(imieInput, "podaj imię");
     }
 
-    if (service == 1) { document.getElementById("dropbutton").textContent = "strzyżenie męskie" }
+    if (document.getElementById("nazwisko").value == "") {
+        good = false;
+        var nazwiskoInput = document.getElementById("nazwisko");
+        showError(nazwiskoInput, "podaj nazwisko");
+    }
 
-    if (service == 2) { document.getElementById("dropbutton").textContent = "strzyżenie damskie" }
+    if (document.getElementById("phone").value == "" && document.getElementById("email").value == "") {
+        good = false;
+        var telefon = document.getElementById("phone");
+        showError(telefon, "podaj numer");
+        var email = document.getElementById("email");
+        showError(email, "podaj email");
+    }
 
-    if (service == 3) { document.getElementById("dropbutton").textContent = "farbowanie" }
+    if (good) {
+        selectedName = document.getElementById("imie").value;
+        selectedSurname = document.getElementById("nazwisko").value;
+        selectedPhone = document.getElementById("phone").value;
+        selectedEmail = document.getElementById("email").value;
+        document.getElementById("fryzjer").value = selectedWorker;
+        document.getElementById("usluga").value = selectedService;
+
+
+        const modalBackground = document.getElementById('modalBackground');
+        modalBackground.style.display = 'none';
+        clickedDiv.style.backgroundColor = "#b52121";
+        clickedDiv.textContent = "Zajęte";
+        wizyty.push({ data: selectedDay, godzina: selectedHour });
+        var selector = '.hour[hour="' + selectedHour + '"][day="' + (new Date(selectedDay).getDay() - 1) + '"]';
+        aktualne_wizyty.push(selector);
+        updateCurrentWeek(firstDayOfWeek);
+        
+        return true;
+    }
+    return false;
+
 
 }
 
+function showError(element, error) {
+    var errorInput = element;
+    errorInput.setAttribute('readonly', true);
+    errorInput.style.backgroundColor = "red";
+    errorInput.value = error;
 
-function updateSecondSelect() {
+    setTimeout(function () {
+        errorInput.style.backgroundColor = "white";
+        errorInput.value = "";
+        errorInput.removeAttribute('readonly');
+    }, 1500);
+}
+
+function reservation() {
+    // var data = new Date(selectedDay);
+    // console.log("Data: ", selectedDay);
+    // console.log("Dzień: ", data.getDate());
+    // console.log("Miesiąc: ", data.getMonth() + 1);
+    // console.log("Rok: ", data.getFullYear());
+    // console.log("Godzina: ", selectedHour);
+    // console.log("Usługa: ", selectedService);
+    // console.log("Fryzjer: ", selectedWorker);
+    // console.log("Imię: ", selectedName);
+    // console.log("Nazwisko: ", selectedSurname);
+    // console.log("Telefon: ", selectedPhone);
+    // console.log("Email: ", selectedEmail);
+
+    // var dataToSend = {
+    //     dzien: data.getDate(),
+    //     miesiac: data.getMonth()+1,
+    //     rok: data.getFullYear(),
+    //     godzina: selectedHour,
+    //     usluga: selectedService,
+    //     fryzjer: selectedWorker,
+    //     imie: selectedName,
+    //     nazwisko: selectedSurname,
+    //     telefon: selectedPhone,
+    //     email: selectedEmail,
+    // };
+
+}
+function onFilterSelectChange() {
     var firstSelect = document.getElementById("calendar_filter");
-    var secondSelect = document.getElementById("filter_items");
-
-    secondSelect.innerHTML = "";
 
     switch (firstSelect.value) {
         case "service":
             selectedFilter = 0;
-            addOptionsToSecondSelect(["Strzyżenie męskie", "Strzyżenie damskie", "Farbowanie"]);
+            document.getElementById("usluga_text").textContent = "Fryzjer: ";
+            addOptionsToSecondSelect(uslugi);
+            addOptionsToModal(fryzjerzy);
             break;
         case "worker":
             selectedFilter = 1;
-            addOptionsToSecondSelect(["Szulc", "Bagiński", "Kipa"]);
+            document.getElementById("usluga_text").textContent = "Usługa: ";
+            addOptionsToSecondSelect(fryzjerzy);
+            addOptionsToModal(uslugi);
             break;
         default:
             break;
     }
 }
 
+function addOptionsToModal(options) {
+    var opcjaSelect = document.getElementById("opcja");
+    opcjaSelect.innerHTML = "";
+    var i = 0;
+    options.forEach(function (optionText) {
+        var option = document.createElement("option");
+        option.text = optionText;
+        option.value = i;
+        opcjaSelect.add(option);
+        i++;
+    });
+}
+
 function addOptionsToSecondSelect(options) {
     var secondSelect = document.getElementById("filter_items");
+    secondSelect.innerHTML = "";
     var i = 0;
     options.forEach(function (optionText) {
         var option = document.createElement("option");
@@ -257,11 +334,28 @@ function addOptionsToSecondSelect(options) {
         secondSelect.add(option);
         i++;
     });
-    saveFilterOption();
+
+    onOptionSelectChange();
 }
 
-function saveFilterOption() {
+function onOptionSelectChange() {
+
     var secondSelect = document.getElementById("filter_items");
-    selectedOption=secondSelect.value;
-    console.log(selectedOption);
+    selectedOption = secondSelect.value;
+    if (selectedFilter != 0) {
+        selectedWorker = fryzjerzy[selectedOption];
+    }
+    else {
+        selectedService = uslugi[selectedOption];
+    }
 }
+
+function onServiceSelectChange() {
+    if (selectedFilter == 0) {
+        selectedWorker = fryzjerzy[document.getElementById("opcja").value];
+    }
+    else {
+        selectedService = uslugi[document.getElementById("opcja").value];
+    }
+}
+
