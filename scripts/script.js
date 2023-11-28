@@ -10,30 +10,24 @@ var selectedFilter = 0;
 var selectedOption = 0;
 var selectedInModal = 0;
 
-var uslugi = ["strzyżenie męskie", "strzyżenie damskie", "farbowanie"];
-var fryzjerzy = ["Szulc", "Bagiński", "Kipa"];
+var uslugi = [];
+var fryzjerzy = [];
+var wizyty = [];
+
+var blad=0;
 
 var selectedName = "";
 var selectedSurname = "";
 var selectedPhone = "";
 var selectedEmail = "";
-var selectedService = uslugi[0];
-var selectedWorker = fryzjerzy[0];
-
-var wizyty = [
-    { data: "2023-11-10", godzina: 10 },
-    { data: "2023-11-8", godzina: 15 },
-    { data: "2023-11-15", godzina: 14 },
-    { data: "2023-1-12", godzina: 10 },
-    { data: "2023-11-30", godzina: 14 },
-    { data: "2023-12-1", godzina: 10 },
-    { data: "2023-11-20", godzina: 16 }
-];
-
+var selectedService;
+var selectedWorker;
+var selectedDzienTygodnia;
 
 aktualne_wizyty = [];
 
 function updateCurrentWeek(now) {
+    console.log("Update");
     const dateElement = document.getElementById('date');
 
     firstDayOfWeek = new Date(now);
@@ -60,6 +54,12 @@ function updateCurrentWeek(now) {
     clearCalendar();
 
     wizyty.forEach(wizyta => {
+        if(wizyta.fryzjer==selectedWorker && selectedFilter==1)
+        if (new Date(wizyta.data).setHours(wizyta.godzina) >= firstDay && new Date(wizyta.data).setHours(wizyta.godzina) <= lastDay) {
+            var selector = '.hour[hour="' + wizyta.godzina + '"][day="' + (new Date(wizyta.data).getDay() - 1) + '"]';
+            aktualne_wizyty.push(selector);
+        }
+        if(wizyta.usluga==selectedService && selectedFilter==0)
         if (new Date(wizyta.data).setHours(wizyta.godzina) >= firstDay && new Date(wizyta.data).setHours(wizyta.godzina) <= lastDay) {
             var selector = '.hour[hour="' + wizyta.godzina + '"][day="' + (new Date(wizyta.data).getDay() - 1) + '"]';
             aktualne_wizyty.push(selector);
@@ -104,6 +104,13 @@ function onLoad() {
             e.preventDefault();
         }
     });
+
+    if(blad==1)
+    {
+        blad=0;
+        openModal(errorDay, errorHour, errorDiv);
+
+    }
 }
 
 function getCurrentDate() {
@@ -156,14 +163,15 @@ function addDays(date, days) {
 }
 
 function openModal(day, hour, div) {
-    if (div.textContent == "Zajęte") {
-        return;
-    }
+    // if (div.textContent == "Zajęte") {
+    //     return;
+    // }
 
     const modalBackground = document.getElementById('modalBackground');
     modalBackground.style.display = 'block';
     modalBackground.style.zIndex = 3;
-
+    
+    document.getElementById("dzien_tygodnia").value=day;
     selectedDay = day;
     selectedHour = hour;
     clickedDiv = div;
@@ -178,6 +186,8 @@ function openModal(day, hour, div) {
     timeInput.value = hours + ":" + minutes;
 
     var dateInput = document.getElementById("termin");
+    
+    console.log(firstDayOfWeek, ", ",day);
     var date = addDays(firstDayOfWeek, day);
 
     var year = date.getFullYear();
@@ -197,10 +207,12 @@ function empty() {
 function closeModal() {
     const modalBackground = document.getElementById('modalBackground');
     modalBackground.style.display = 'none';
+    document.getElementById("modal-error").innerHTML="";
 }
 
 function saveModal() {
 
+    document.getElementById("modal-error").innerHTML="";
     var good = true;
 
     if (document.getElementById("imie").value == "") {
@@ -261,34 +273,6 @@ function showError(element, error) {
     }, 1500);
 }
 
-function reservation() {
-    // var data = new Date(selectedDay);
-    // console.log("Data: ", selectedDay);
-    // console.log("Dzień: ", data.getDate());
-    // console.log("Miesiąc: ", data.getMonth() + 1);
-    // console.log("Rok: ", data.getFullYear());
-    // console.log("Godzina: ", selectedHour);
-    // console.log("Usługa: ", selectedService);
-    // console.log("Fryzjer: ", selectedWorker);
-    // console.log("Imię: ", selectedName);
-    // console.log("Nazwisko: ", selectedSurname);
-    // console.log("Telefon: ", selectedPhone);
-    // console.log("Email: ", selectedEmail);
-
-    // var dataToSend = {
-    //     dzien: data.getDate(),
-    //     miesiac: data.getMonth()+1,
-    //     rok: data.getFullYear(),
-    //     godzina: selectedHour,
-    //     usluga: selectedService,
-    //     fryzjer: selectedWorker,
-    //     imie: selectedName,
-    //     nazwisko: selectedSurname,
-    //     telefon: selectedPhone,
-    //     email: selectedEmail,
-    // };
-
-}
 function onFilterSelectChange() {
     var firstSelect = document.getElementById("calendar_filter");
 
@@ -308,6 +292,8 @@ function onFilterSelectChange() {
         default:
             break;
     }
+    
+    updateCurrentWeek(now);
 }
 
 function addOptionsToModal(options) {
@@ -348,6 +334,8 @@ function onOptionSelectChange() {
     else {
         selectedService = uslugi[selectedOption];
     }
+    
+    updateCurrentWeek(now);
 }
 
 function onServiceSelectChange() {

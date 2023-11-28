@@ -1,137 +1,313 @@
-<?php 
-    require_once "dbconnect.php";
-    $connection = @new mysqli($host, $user, $password, $database);
-
-    if ($connection->connect_error) 
-    {
-        die("Database connection error: " . $connection->connect_error);
-        
-    }
-    else 
-    {
-        if (isset($_GET["termin"]) && isset($_GET["czas"]) && isset($_GET["imie"]) && isset($_GET["nazwisko"])) {
-            // Odczytaj dane z metody GET
-            $termin = $_GET["termin"];
-            $czas = $_GET["czas"];
-            list($godzina, $minuta) = explode(":",$czas);
-            $imie = $_GET["imie"];
-            $nazwisko = $_GET["nazwisko"];
-            $fryzjer = $_GET["fryzjer"];
-            $fryzjer_id="";
-            $usluga = $_GET["usluga"];
-            $usluga_id = "";
-            $klient_id="";
-        
-            // Podziel datę na dzień, miesiąc i rok
-            list($rok, $miesiac, $dzien) = explode("-", $termin);
-        
-            // Wyświetl odczytane dane
-            echo "Termin: $dzien-$miesiac-$rok<br>";
-            echo "Czas: $czas<br>";
-            echo "Imię: $imie<br>";
-            echo "Nazwisko: $nazwisko<br>";
-            echo "Usługa: $usluga<br>";
-            echo "Fryzjer: $fryzjer<br>";
-            $phone = "";
-            $email = "";
-            // Sprawdź, czy parametr phone został przesłany
-            if (isset($_GET["phone"])) {
-                $phone = $_GET["phone"];
-                echo "Numer telefonu: $phone<br>";
-            }
-        
-            // Sprawdź, czy parametr email został przesłany
-            if (isset($_GET["email"])) {
-                $email = $_GET["email"];
-                echo "Email: $email";
-            }
-
-            $sql = "INSERT INTO KLIENT (IMIE, NAZWISKO, NUMER_TELEFONU, EMAIL) VALUES ('$imie', '$nazwisko', '$phone', '$email')";
-        
-            if ($connection->query($sql) === TRUE) {
-                echo "Nowy rekord został dodany poprawnie.";
-            } else {
-                echo "Błąd: " . $sql . "<br>" . $connection->error;
-            }
-
-            $sql = "Select KLIENT_ID from klient where nazwisko = '$nazwisko'";
-            if ($result = @$connection->query($sql)) {
-                
-                    $row = $result->fetch_assoc();
-                        
-                    $klient_id = $row['KLIENT_ID'];
-
-                    $result->free_result();
-                }
-
-            $sql = "Select FRYZJER_ID from fryzjer where nazwisko = '$fryzjer'";
-            if ($result = @$connection->query($sql)) {
-                    $row = $result->fetch_assoc();
-                        
-                    $fryzjer_id = $row['FRYZJER_ID'];
-                    echo "Fryzjer_id: $fryzjer_id";
-                    $result->free_result();
-                }
-
-            $sql = "Select USLUGA_ID from usluga where nazwa = '$usluga'";
-            if ($result = @$connection->query($sql)) {
-                
-                    $row = $result->fetch_assoc();
-                        
-                    $usluga_id = $row['USLUGA_ID'];
-
-                    $result->free_result();
-                }
-
-            if($fryzjer_id!="" && $usluga_id!="")
-            {
-            $sql = "INSERT INTO WIZYTA (DZIEN, MIESIAC, ROK, GODZINA, MINUTA, ZATWIERDZONY, KLIENT_ID, FRYZJER_ID, USLUGA_ID) VALUES ($dzien, $miesiac, $rok, $godzina, $minuta, false, $klient_id, $fryzjer_id, $usluga_id)";
-        
-        if ($connection->query($sql) === TRUE) {
-            echo "Nowy rekord został dodany poprawnie.";
-        } else {
-            echo "Błąd: " . $sql . "<br>" . $connection->error;
-        }
-            }
-
-        } else {
-            echo "Brak wymaganych danych w adresie URL.";
-        }
+<?php
+session_start();
+// error_reporting(0);
 
 
+if (!isset($_GET["termin"]) || !isset($_GET["czas"]) || !isset($_GET["imie"]) || !isset($_GET["nazwisko"]) || !isset($_GET["fryzjer"]) || !isset($_GET["usluga"])) {
+    header("Location: index.php");
+    exit;
+}
 
-        //     $sql = "SELECT * FROM FRYZJER";
+//odczytane dane
+$termin = $_GET["termin"];
+$czas = $_GET["czas"];
+list($godzina, $minuta) = explode(":", $czas);
+$imie = $_GET["imie"];
+$nazwisko = $_GET["nazwisko"];
+$fryzjer = $_GET["fryzjer"];
+$fryzjer_id = "";
+$usluga = $_GET["usluga"];
+$usluga_id = "";
+$klient_id = "";
+list($rok, $miesiac, $dzien) = explode("-", $termin);
+$dzien_tygodnia = $_GET['dzien_tygodnia'];
 
-        // if ($result = @$connection->query($sql)) {
-        //     $counter = 0;
-        
-        //     while ($row = $result->fetch_assoc()) {
-        //         if ($counter <= 1) {
-        //             $name = $row['NAZWISKO'];
-        //             echo $name;
-                    
-        //         }
-        
-        //         $counter++;
-        //     }
-        
-        //     $result->free_result();
-        
-        
+require_once "dbconnect.php";
+$connection = @new mysqli($host, $user, $password, $database);
 
-        // $name = "Jakub";
-        // $surname = "Jabłczyński";
-        // $phone = "444555666";
-        
-        // $sql = "INSERT INTO FRYZJER (IMIE, NAZWISKO, NUMER_KONTAKTOWY) VALUES ('$name', '$surname', '$phone')";
-        
-        // if ($connection->query($sql) === TRUE) {
-        //     echo "Nowy rekord został dodany poprawnie.";
-        // } else {
-        //     echo "Błąd: " . $sql . "<br>" . $connection->error;
-        // }
+if ($connection->connect_error) {
+    echo "Błąd" . $connection->connect_error;
+    $_SESSION['error'] = 'Błąd połączenia z serwerem';
+    $_SESSION['godzina'] = $godzina;
+    $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+    header('Location: index.php');
+    exit;
+}
 
-    }
-
+$sql = "SELECT WIZYTA_ID, fryzjer.NAZWISKO, usluga.NAZWA from wizyta,fryzjer,usluga where ROK=$rok AND DZIEN=$dzien AND MIESIAC=$miesiac AND GODZINA=$godzina AND MINUTA=$minuta AND fryzjer.NAZWISKO = '$fryzjer' AND fryzjer.FRYZJER_ID=wizyta.FRYZJER_ID AND usluga.USLUGA_ID = wizyta.USLUGA_ID";
+$result = @$connection->query($sql);
+if (!$result) {
+    $result->free_result();
     $connection->close();
+    echo "Nie udało się pobrać id klienta";
+    $_SESSION['error'] = 'Nie udało się pobrać id klienta';
+    $_SESSION['godzina'] = $godzina;
+    $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+    header('Location: index.php');
+    exit;
+}
+
+if ($result->num_rows > 0) {
+    $_SESSION['error'] = 'Termin już zajęty';
+    $_SESSION['godzina'] = $godzina;
+    $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+
+    $result->free_result();
+    $connection->close();
+
+    header('Location: index.php');
+    exit;
+}
+
+echo "Termin: $dzien-$miesiac-$rok<br>";
+echo "Czas: $czas<br>";
+echo "Imię: $imie<br>";
+echo "Nazwisko: $nazwisko<br>";
+echo "Usługa: $usluga<br>";
+echo "Fryzjer: $fryzjer<br>";
+$phone = "";
+$email = "";
+
+// Sprawdź, czy parametr phone został przesłany
+if ($_GET["phone"] != "") {
+    $phone = $_GET["phone"];
+    echo "Numer telefonu: $phone<br>";
+}
+
+// Sprawdź, czy parametr email został przesłany
+if ($_GET["email"] != "") {
+    $email = $_GET["email"];
+    echo "Email: $email<br>";
+}
+
+//jeżeli jest sam telefon szukamy po telefonie
+if ($phone != "" && $email == "") {
+    echo "Szukam po telefonie<br>";
+    $sql = "SELECT KLIENT_ID from klient where nazwisko = '$nazwisko' AND imie='$imie' AND NUMER_TELEFONU='$phone'";
+    $result = @$connection->query($sql);
+    if (!$result) {
+        $result->free_result();
+        $connection->close();
+        echo "Nie udało się pobrać id klienta";
+        $_SESSION['error'] = 'Nie udało się pobrać id klienta';
+        $_SESSION['godzina'] = $godzina;
+        $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+        header('Location: index.php');
+        exit;
+    }
+
+    $ile_klientow = $result->num_rows;
+    if ($ile_klientow > 0) {
+        $row = $result->fetch_assoc();
+        $klient_id = $row['KLIENT_ID'];
+    }
+}
+
+//jeżeli jest sam email szukamy po emailu
+if ($email != "" && $_GET["phone"] != "") {
+    echo "Szukam po emailu<br>";
+    $sql = "SELECT KLIENT_ID from klient where nazwisko = '$nazwisko' AND imie='$imie' AND EMAIL='$email'";
+    $result = @$connection->query($sql);
+    if (!$result) {
+        $result->free_result();
+        $connection->close();
+        echo "Nie udało się pobrać id klienta";
+        $_SESSION['error'] = 'Nie udało się pobrać id klienta';
+        $_SESSION['godzina'] = $godzina;
+        $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+        header('Location: index.php');
+        exit;
+    }
+
+    $ile_klientow = $result->num_rows;
+    if ($ile_klientow > 0) {
+        $row = $result->fetch_assoc();
+        $klient_id = $row['KLIENT_ID'];
+    }
+}
+
+// jeżeli jest i email i telefon
+if ($email != '' && $phone != '') {
+
+    echo "Szukam po telefonie i emailu<br>";
+    $sql = "SELECT KLIENT_ID from klient where nazwisko = '$nazwisko' AND imie='$imie' AND EMAIL='$email' AND NUMER_TELEFONU = '$phone'";
+    $result = @$connection->query($sql);
+    if (!$result) {
+        $result->free_result();
+        $connection->close();
+        echo "Nie udało się pobrać id klienta";
+        $_SESSION['error'] = 'Nie udało się pobrać id klienta';
+        $_SESSION['godzina'] = $godzina;
+        $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+        header('Location: index.php');
+        exit;
+    }
+
+    $ile_klientow = $result->num_rows;
+    //jeżeli mamy wynik przy szukaniu dwoma kryteriami
+    if ($ile_klientow > 0) {
+        $row = $result->fetch_assoc();
+        $klient_id = $row['KLIENT_ID'];
+    } else {
+        //jeżeli nie to szukamy jednym kryterium
+        echo "Szukam po samym telefonie<br>";
+        $sql = "SELECT KLIENT_ID from klient where nazwisko = '$nazwisko' AND imie='$imie' AND NUMER_TELEFONU='$phone'";
+        $result = @$connection->query($sql);
+        if (!$result) {
+            $result->free_result();
+            $connection->close();
+            echo "Nie udało się pobrać id klienta";
+            $_SESSION['error'] = 'Nie udało się pobrać id klienta';
+            $_SESSION['godzina'] = $godzina;
+            $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+            header('Location: index.php');
+            exit;
+        }
+        $ile_klientow = $result->num_rows;
+        if ($ile_klientow > 0) {
+            //jeżeli dla jednego kryterium jest wynik uzupełniamy drugie
+            $row = $result->fetch_assoc();
+            $klient_id = $row['KLIENT_ID'];
+
+            $sql = "UPDATE klient SET email = '$email' WHERE numer_telefonu = '$phone'";
+            $result = @$connection->query($sql);
+            if (!$result) {
+                $result->free_result();
+                $connection->close();
+                echo "Nie udało się pobrać id klienta";
+                $_SESSION['error'] = 'Nie udało się pobrać id klienta';
+                $_SESSION['godzina'] = $godzina;
+                $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+                header('Location: index.php');
+                exit;
+            }
+        } else {
+            //jeżeli dla pierwszego kryterium nie ma wyników to szukamy drugim
+            echo "Szukam po samym emailu<br>";
+            $sql = "SELECT KLIENT_ID from klient where nazwisko = '$nazwisko' AND imie='$imie' AND EMAIL='$email'";
+            $result = @$connection->query($sql);
+            if (!$result) {
+                $result->free_result();
+                $connection->close();
+                echo "Nie udało się pobrać id klienta";
+                $_SESSION['error'] = 'Nie udało się pobrać id klienta';
+                $_SESSION['godzina'] = $godzina;
+                $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+                header('Location: index.php');
+                exit;
+            }
+            $ile_klientow = $result->num_rows;
+            if ($ile_klientow > 0) {
+                //jeżeli dla drugiego kryterium jest wynik uzupełniamy pierwsze
+                $row = $result->fetch_assoc();
+                $klient_id = $row['KLIENT_ID'];
+
+                $sql = "UPDATE klient SET NUMER_TELEFONU = '$phone' WHERE EMAIL = '$email'";
+                $result = @$connection->query($sql);
+                if (!$result) {
+                    $result->free_result();
+                    $connection->close();
+                    echo "Nie udało się pobrać id klienta";
+                    $_SESSION['error'] = 'Nie udało się pobrać id klienta';
+                    $_SESSION['godzina'] = $godzina;
+                    $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+                    header('Location: index.php');
+                    exit;
+                }
+            }
+        }
+    }
+}
+
+//jeżeli mimo podania danych nie znaleziono klienta musimy go dodać
+if ($klient_id == "") {
+    $sql = "INSERT INTO KLIENT (IMIE, NAZWISKO, NUMER_TELEFONU, EMAIL) VALUES ('$imie', '$nazwisko', '$phone', '$email')";
+    $result = @$connection->query($sql);
+    if (!$result) {
+        $result->free_result();
+        $connection->close();
+        echo "Nie udało się dodać klienta";
+        $_SESSION['error'] = 'Nie udało się dodać klienta';
+        $_SESSION['godzina'] = $godzina;
+        $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+        header('Location: index.php');
+        exit;
+    }
+
+    if ($email == '' && $phone != '')
+        $sql = "SELECT KLIENT_ID from klient where nazwisko = '$nazwisko' AND imie='$imie' AND NUMER_TELEFONU = '$phone'";
+
+    if ($email != '' && $phone == '')
+        $sql = "SELECT KLIENT_ID from klient where nazwisko = '$nazwisko' AND imie='$imie' AND EMAIL='$email'";
+
+    if ($email != '' && $phone != '')
+        $sql = "SELECT KLIENT_ID from klient where nazwisko = '$nazwisko' AND imie='$imie' AND EMAIL='$email' AND NUMER_TELEFONU = '$phone'";
+
+    $result = @$connection->query($sql);
+    if (!$result) {
+        $result->free_result();
+        $connection->close();
+        echo "Nie udało się pobrać id klienta";
+        $_SESSION['error'] = 'Nie udało się pobrać id klienta';
+        $_SESSION['godzina'] = $godzina;
+        $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+        header('Location: index.php');
+        exit;
+    }
+
+    $row = $result->fetch_assoc();
+    $klient_id = $row['KLIENT_ID'];
+}
+
+$sql = "Select FRYZJER_ID from fryzjer where nazwisko = '$fryzjer'";
+$result = @$connection->query($sql);
+if (!$result) {
+    $result->free_result();
+    $connection->close();
+    echo "Nie udało się pobrać id fryzjera";
+    $_SESSION['error'] = 'Nie udało się pobrać id fryzjera';
+    $_SESSION['godzina'] = $godzina;
+    $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+    header('Location: index.php');
+    exit;
+}
+
+$row = $result->fetch_assoc();
+$fryzjer_id = $row['FRYZJER_ID'];
+echo "Fryzjer_id: $fryzjer_id<br>";
+
+$sql = "Select USLUGA_ID from usluga where nazwa = '$usluga'";
+$result = @$connection->query($sql);
+if (!$result) {
+    $result->free_result();
+    $connection->close();
+    echo "Nie udało się pobrać id uslugi";
+    $_SESSION['error'] = 'Nie udało się pobrać id uslugi';
+    $_SESSION['godzina'] = $godzina;
+    $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+    header('Location: index.php');
+}
+
+$row = $result->fetch_assoc();
+$usluga_id = $row['USLUGA_ID'];
+$result->free_result();
+
+if ($fryzjer_id != "" && $usluga_id != "") {
+    $sql = "INSERT INTO WIZYTA (DZIEN, MIESIAC, ROK, GODZINA, MINUTA, ZATWIERDZONA, KLIENT_ID, FRYZJER_ID, USLUGA_ID) VALUES ($dzien, $miesiac, $rok, $godzina, $minuta, false, $klient_id, $fryzjer_id, $usluga_id)";
+
+    if (@$connection->query($sql) === TRUE) {
+        $connection->close();
+        header('Location: index.php');
+    } else {
+        $connection->close();
+        echo "Nie udało się dodać wizyy";
+        $_SESSION['error'] = 'Nie udało się dodać wizyty';
+        $_SESSION['godzina'] = $godzina;
+        $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+        header('Location: index.php');
+    }
+}
+
+
+
 ?>
