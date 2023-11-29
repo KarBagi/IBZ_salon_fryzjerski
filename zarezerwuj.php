@@ -28,8 +28,6 @@ $connection = @new mysqli($host, $user, $password, $database);
 if ($connection->connect_error) {
     echo "Błąd" . $connection->connect_error;
     $_SESSION['error'] = 'Błąd połączenia z serwerem';
-    $_SESSION['godzina'] = $godzina;
-    $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
     header('Location: index.php');
     exit;
 }
@@ -41,16 +39,12 @@ if (!$result) {
     $connection->close();
     echo "Nie udało się pobrać id klienta";
     $_SESSION['error'] = 'Nie udało się pobrać id klienta';
-    $_SESSION['godzina'] = $godzina;
-    $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
     header('Location: index.php');
     exit;
 }
 
 if ($result->num_rows > 0) {
-    $_SESSION['error'] = 'Termin już zajęty';
-    $_SESSION['godzina'] = $godzina;
-    $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
+    $_SESSION['error'] = 'Termin już zajęty'.$fryzjer;
 
     $result->free_result();
     $connection->close();
@@ -90,8 +84,6 @@ if ($phone != "" && $email == "") {
         $connection->close();
         echo "Nie udało się pobrać id klienta";
         $_SESSION['error'] = 'Nie udało się pobrać id klienta';
-        $_SESSION['godzina'] = $godzina;
-        $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
         header('Location: index.php');
         exit;
     }
@@ -113,8 +105,6 @@ if ($email != "" && $_GET["phone"] != "") {
         $connection->close();
         echo "Nie udało się pobrać id klienta";
         $_SESSION['error'] = 'Nie udało się pobrać id klienta';
-        $_SESSION['godzina'] = $godzina;
-        $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
         header('Location: index.php');
         exit;
     }
@@ -137,8 +127,6 @@ if ($email != '' && $phone != '') {
         $connection->close();
         echo "Nie udało się pobrać id klienta";
         $_SESSION['error'] = 'Nie udało się pobrać id klienta';
-        $_SESSION['godzina'] = $godzina;
-        $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
         header('Location: index.php');
         exit;
     }
@@ -158,8 +146,6 @@ if ($email != '' && $phone != '') {
             $connection->close();
             echo "Nie udało się pobrać id klienta";
             $_SESSION['error'] = 'Nie udało się pobrać id klienta';
-            $_SESSION['godzina'] = $godzina;
-            $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
             header('Location: index.php');
             exit;
         }
@@ -176,8 +162,6 @@ if ($email != '' && $phone != '') {
                 $connection->close();
                 echo "Nie udało się pobrać id klienta";
                 $_SESSION['error'] = 'Nie udało się pobrać id klienta';
-                $_SESSION['godzina'] = $godzina;
-                $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
                 header('Location: index.php');
                 exit;
             }
@@ -191,8 +175,6 @@ if ($email != '' && $phone != '') {
                 $connection->close();
                 echo "Nie udało się pobrać id klienta";
                 $_SESSION['error'] = 'Nie udało się pobrać id klienta';
-                $_SESSION['godzina'] = $godzina;
-                $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
                 header('Location: index.php');
                 exit;
             }
@@ -209,8 +191,6 @@ if ($email != '' && $phone != '') {
                     $connection->close();
                     echo "Nie udało się pobrać id klienta";
                     $_SESSION['error'] = 'Nie udało się pobrać id klienta';
-                    $_SESSION['godzina'] = $godzina;
-                    $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
                     header('Location: index.php');
                     exit;
                 }
@@ -228,8 +208,6 @@ if ($klient_id == "") {
         $connection->close();
         echo "Nie udało się dodać klienta";
         $_SESSION['error'] = 'Nie udało się dodać klienta';
-        $_SESSION['godzina'] = $godzina;
-        $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
         header('Location: index.php');
         exit;
     }
@@ -249,8 +227,6 @@ if ($klient_id == "") {
         $connection->close();
         echo "Nie udało się pobrać id klienta";
         $_SESSION['error'] = 'Nie udało się pobrać id klienta';
-        $_SESSION['godzina'] = $godzina;
-        $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
         header('Location: index.php');
         exit;
     }
@@ -266,8 +242,6 @@ if (!$result) {
     $connection->close();
     echo "Nie udało się pobrać id fryzjera";
     $_SESSION['error'] = 'Nie udało się pobrać id fryzjera';
-    $_SESSION['godzina'] = $godzina;
-    $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
     header('Location: index.php');
     exit;
 }
@@ -283,8 +257,6 @@ if (!$result) {
     $connection->close();
     echo "Nie udało się pobrać id uslugi";
     $_SESSION['error'] = 'Nie udało się pobrać id uslugi';
-    $_SESSION['godzina'] = $godzina;
-    $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
     header('Location: index.php');
 }
 
@@ -293,17 +265,16 @@ $usluga_id = $row['USLUGA_ID'];
 $result->free_result();
 
 if ($fryzjer_id != "" && $usluga_id != "") {
-    $sql = "INSERT INTO WIZYTA (DZIEN, MIESIAC, ROK, GODZINA, MINUTA, ZATWIERDZONA, KLIENT_ID, FRYZJER_ID, USLUGA_ID) VALUES ($dzien, $miesiac, $rok, $godzina, $minuta, false, $klient_id, $fryzjer_id, $usluga_id)";
+    $sql = "INSERT INTO WIZYTA (DZIEN, MIESIAC, ROK, GODZINA, MINUTA, ZATWIERDZONA, KLIENT_ID, FRYZJER_ID, USLUGA_ID) VALUES ($dzien, $miesiac, $rok, $godzina, $minuta, 'false', $klient_id, $fryzjer_id, $usluga_id)";
 
     if (@$connection->query($sql) === TRUE) {
         $connection->close();
+        $_SESSION['error'] = 'Rezerwacja udana';
         header('Location: index.php');
     } else {
         $connection->close();
         echo "Nie udało się dodać wizyy";
         $_SESSION['error'] = 'Nie udało się dodać wizyty';
-        $_SESSION['godzina'] = $godzina;
-        $_SESSION['dzien_tygodnia'] = $dzien_tygodnia;
         header('Location: index.php');
     }
 }

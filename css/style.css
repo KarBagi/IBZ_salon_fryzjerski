@@ -277,6 +277,13 @@ border: 3px #d21957 solid;
     max-width: 200px;
 }
 
+#opcja{
+    border: 1px solid blue;
+    margin-left: 10px;
+    font-size: 25px;
+    max-width: 200px;
+}
+
 #modal-error
 {
     font-size: 30px;

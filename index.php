@@ -21,11 +21,29 @@ session_start();
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="icon" href="ikona.jpg" type="image/jpg">
 
+    <?php
+    require_once("wizyty.php");
+    require_once("fryzjerzyIuslugi.php");
+    require_once("specjalizacje.php");
+    ?>
 </head>
 
 <body>
 
+    <div id="errorModalBackground" class="modal-background">
+        <div class="modal" id="errorModal">
+            <?php
+            if ((isset($_SESSION['error']))) {
+                echo $_SESSION['error'];
+            }
+            ?>
+            <div onclick="closeErrorModal()" id="cancel" class="buttonModal">OK</div>
+        </div>
+    </div>
+
     <div class="modal-background" id="modalBackground">
+
+
         <div class="modal">
             <h2>Rezerwacja usługi</h2>
             <form action="zarezerwuj.php" id="modalForm" method="get" onsubmit="return saveModal()">
@@ -78,27 +96,18 @@ session_start();
                         <td><input type="text" name="email" id="email"></td>
                     </tr>
                 </table>
-                <span id="modal-error">
-                    <?php
-                    if ((isset($_SESSION['error']))) {
-                        echo $_SESSION['error'];
-                        // unset($_SESSION['error']);
-                    }
-                    ?>
-                </span>
                 <input type="hidden" name="fryzjer" id="fryzjer">
                 <input type="hidden" name="usluga" id="usluga">
                 <input type="hidden" name="dzien_tygodnia" id="dzien_tygodnia">
                 <div style="display: flex; justify-content: space-between;">
                     <div onclick="closeModal()" id="cancel" class="buttonModal">Anuluj</div>
-                    <input type="submit" value="Zapisz" id="save" class="buttonModal">
+                    <button type="submit" id="save" class="buttonModal">Zapisz</button>
 
                 </div>
-
             </form>
-
         </div>
     </div>
+
 
     <div id="nav">
         <p>Zakład fryzjerski</p>
@@ -119,6 +128,7 @@ session_start();
             </div>
             <a href="#kontakt">Kontakt</a>
             <a href="panel.html">Panel Administratora</a>
+            <a href="kalendarzFryzjer.php">Widok fryzjera</a>
         </div>
 
     </div>
@@ -257,31 +267,16 @@ session_start();
     <div id="footer"></div>
     Strona rezerwacji do fryzjera na Projekt z internetowych baz danych. Autorzy: Szulc, Bagiński, Kipa.
     </div>
+
     <?php
-    require_once('wizyty.php');
 
     if ((isset($_SESSION['error']))) {
 
-
-        $dzien_tygodnia = $_SESSION['dzien_tygodnia'];
-        $godzina = $_SESSION['godzina'];
         echo "<script>";
-        echo 'var siema =  new Date(\'' . $dzien_tygodnia . '\').getDay();';
-        echo 'var selector = \'.hour[hour="\' + ' . $godzina . ' + \'"][day="\' + (new Date(\'' . $dzien_tygodnia . '\').getDay()) + \'"]\';';
-        echo 'var divWithAttributes = document.querySelector(selector);';
-        echo 'var blad=1;';
-        echo "var errorDay=".(int) $dzien_tygodnia .";";
-        echo "var errorHour=".(int) $godzina .";";
-        echo "var errorDiv=divWithAttributes;";
+        echo "openErrorModal();";
         echo "</script>";
         unset($_SESSION['error']);
     }
-    ?>
-
-    <?php
-    require_once('fryzjerzyIuslugi.php');
-
-
     ?>
 </body>
 

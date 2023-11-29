@@ -6,8 +6,6 @@ $connection = @new mysqli($host, $user, $password, $database);
 if ($connection->connect_error) {
     echo "Błąd" . $connection->connect_error;
     $_SESSION['error'] = 'Błąd połączenia z serwerem';
-    $_SESSION['nazwisko'] = $nazwisko;
-    $_SESSION['usluga'] = $usluga;
 }
 
 $sql = "SELECT IMIE, NAZWISKO FROM FRYZJER";
@@ -17,8 +15,6 @@ if (!$result) {
     $result->free_result();
     $connection->close();
     echo "Nie udało się pobrać wizyt";
-    $_SESSION['error'] = 'Nie udało się pobrać wizyt';
-    $_SESSION['nazwisko'] = $nazwisko;
 
     header('Location: index.php');
     exit;
@@ -43,8 +39,6 @@ if (!$result) {
     $result->free_result();
     $connection->close();
     echo "Nie udało się pobrać usług";
-    $_SESSION['error'] = 'Nie udało się pobrać usług';
-    $_SESSION['usluga'] = $usluga;
 
     header('Location: index.php');
     exit;
