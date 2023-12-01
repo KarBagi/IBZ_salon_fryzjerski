@@ -8,7 +8,7 @@ if ($connection->connect_error) {
     $_SESSION['error'] = 'Błąd połączenia z serwerem';
 }
 
-$sql = "SELECT IMIE, NAZWISKO FROM FRYZJER";
+$sql = "SELECT IMIE, NAZWISKO FROM FRYZJER WHERE ZATRUDNIONY=1";
 $result = @$connection->query($sql);
 
 if (!$result) {
@@ -32,7 +32,7 @@ if ($result->num_rows > 0) {
     }
 }
 
-$sql = "SELECT NAZWA FROM USLUGA";
+$sql = "SELECT NAZWA, CZAS_TRWANIA FROM USLUGA WHERE AKTYWNA = 1";
 $result = @$connection->query($sql);
 
 if (!$result) {
@@ -45,14 +45,18 @@ if (!$result) {
 }
 
 $uslugi = [];
+$czas_uslugi = [];
 
 if ($result->num_rows > 0) {
     $uslugi = array();
+    $czas_uslugi = array();
 
     while ($row = $result->fetch_assoc()) {
         $usluga = $row["NAZWA"];
+        $czas = $row["CZAS_TRWANIA"];
 
         $uslugi[] = array($usluga);
+        $czas_uslugi[] = array("nazwa"=> $usluga, "czas"=> $czas);
     }
 }
 
@@ -61,6 +65,7 @@ $connection->close();
 echo '<script>';
 echo 'var fryzjerzy = ' . json_encode($fryzjerzy) . ';';
 echo 'var uslugi = ' . json_encode($uslugi) . ';';
+echo 'var czas_uslugi = ' . json_encode($czas_uslugi) . ';';
 echo "var selectedService = uslugi[0];";
 echo "var selectedWorker = fryzjerzy[0];";
 echo '</script>';

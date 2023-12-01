@@ -28,7 +28,6 @@ body {
 
 #nav p {
     font-size: 40px;
-
     color: white;
     text-shadow: black 2px 2px;
     line-height: 45px;
@@ -323,120 +322,8 @@ border: 3px #d21957 solid;
     text-decoration: none;
 }
 
-.dropdownMenu {
-    float: left;
-    overflow: hidden;
-}
-
-.dropdownMenu .dropbtnMenu {
-    font-size: 16px;
-    border: none;
-    outline: none;
-    color: white;
-    padding: 14px 16px;
-    background-color: inherit;
-    font-family: inherit;
-    margin: 0;
-}
-
-.navbarMenu a:hover,
-.dropdownMenu:hover .dropbtnMenu {
+.navbarMenu a:hover {
     background-color: #73abfd;
-}
-
-.dropdownMenu-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.dropdownMenu-content a {
-    float: none;
-    color: rgb(0, 0, 0);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
-
-.dropdownMenu-content a:hover {
-    background-color: #ddd;
-}
-
-.dropdownMenu:hover .dropdownMenu-content {
-    display: block;
-}
-
-.form-container {
-    width: 50%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.admin-form {
-    text-align: center;
-}
-
-.admin-form label {
-    display: block;
-    margin-bottom: 10px;
-}
-
-.admin-form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
-}
-
-.admin-form button {
-    background-color: #2196f3;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.admin-form button:hover {
-    background-color: #1976d2;
-}
-
-.service-form {
-    text-align: center;
-}
-
-.service-form label {
-    display: block;
-    margin-bottom: 10px;
-}
-
-.service-form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
-}
-
-.service-form button {
-    background-color: #2196f3;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.service-form button:hover {
-    background-color: #1976d2;
 }
 
 #footer
@@ -445,5 +332,4 @@ border: 3px #d21957 solid;
     padding: 20px;
     text-align: center;
     font-size: large;
-    margin-top: 40px;
 }

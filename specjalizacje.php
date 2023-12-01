@@ -12,7 +12,7 @@ if ($connection->connect_error) {
     $_SESSION['error'] = 'Błąd połączenia z serwerem';
 }
 
-$sql = "SELECT fryzjer.NAZWISKO, specjalizacja.NAZWA FROM fryzjer, specjalizacja, specjalizacja_fryzjer WHERE fryzjer.FRYZJER_ID=specjalizacja_fryzjer.FRYZJER_ID AND specjalizacja.SPECJALIZACJA_ID = specjalizacja_fryzjer.SPECJALIZACJA_ID";
+$sql = "SELECT fryzjer.NAZWISKO, usluga.NAZWA FROM fryzjer, usluga, specjalizacja_fryzjer WHERE fryzjer.FRYZJER_ID=specjalizacja_fryzjer.FRYZJER_ID AND usluga.USLUGA_ID = specjalizacja_fryzjer.SPECJALIZACJA_ID AND usluga.AKTYWNA = 1 AND fryzjer.ZATRUDNIONY=1";
 $result = @$connection->query($sql);
 if (!$result) {
     $result->free_result();

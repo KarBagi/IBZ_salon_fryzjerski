@@ -127,17 +127,8 @@ session_start();
 
         <div class="navbarMenu">
             <a href="index.php">Strona główna</a>
-            <a href="#news">Aktualnści</a>
-            <div class="dropdownMenu">
-                <button class="dropbtnMenu">Cennik
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdownMenu-content">
-                    <a href="https://www.linkedin.com/in/bartosz-kipa-797851282/?originalSubdomain=pl">Kipa</a>
-                    <a href="#2137">Szulc</a>
-                    <a href="#420">Bagiński</a>
-                </div>
-            </div>
+            <a href="#news">Aktualności</a>
+            <a href="cennik.php">Cennik</a>
             <a href="#kontakt">Kontakt</a>
             <a href="panel.html">Panel Administratora</a>
         </div>
@@ -150,7 +141,7 @@ session_start();
             <div id="slider">
                 <div id="filter">Fryzjer:
                     <select name="calendar_option" id="calendar_filter" onchange="changeWorker()">
-                    
+
                     </select>
                 </div>
 
@@ -266,15 +257,15 @@ session_start();
 
         </div>
 
-        <span id="calendar-error">
+
 
 
     </div>
 
-    <div id="footer"></div>
+    <div id="footer">
     Strona rezerwacji do fryzjera na Projekt z internetowych baz danych. Autorzy: Szulc, Bagiński, Kipa.
     </div>
-
+    
     <?php
 
     if ((isset($_SESSION['error']))) {
