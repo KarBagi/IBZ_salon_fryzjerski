@@ -25,25 +25,25 @@
         echo "Błąd" . $connection->connect_error;
     }
 
-    $sql = "SELECT NAZWA, CENA, CZAS_TRWANIA FROM usluga WHERE AKTYWNA = 1";
+    $sql = "SELECT * FROM fryzjer WHERE ZATRUDNIONY = 1";
     $result = @$connection->query($sql);
     if (!$result) {
         $result->free_result();
         $connection->close();
-        echo "Nie udało się pobrać cennika";
+        echo "Nie udało się pobrać fryzjerów";
     }
 
-    $cennik = [];
+    $fryzjerzy = [];
 
     if ($result->num_rows > 0) {
-        $cennik = array();
+        $fryzjerzy = array();
         while ($row = $result->fetch_assoc()) {
 
-            $nazwa = $row["NAZWA"];
-            $cena = $row["CENA"];
-            $czas = $row["CZAS_TRWANIA"];
+            $imie = $row["IMIE"];
+            $nazwisko = $row["NAZWISKO"];
+            $telefon = $row["NUMER_KONTAKTOWY"];
 
-            $cennik[] = array("nazwa" => $nazwa, "cena" => $cena, "czas_trwania" => $czas);
+            $fryzjerzy[] = array("imie" => $imie, "nazwisko" => $nazwisko, "telefon" => $telefon);
 
         }
     }
@@ -51,7 +51,7 @@
     $connection->close();
 
     echo '<script>';
-    echo 'var cennik = ' . json_encode($cennik) . ';';
+    echo 'var fryzjerzy = ' . json_encode($fryzjerzy) . ';';
     echo '</script>';
     ?>
     <style>
@@ -96,15 +96,15 @@
     <div id="calendar">
         <script>
             // Funkcja generująca tabelę
-            function generujTabeleCennika() {
+            function generujTabeleKontektow() {
                 var tabela = '<table>';
-                tabela += '<tr><th>Nazwa</th><th>Cena</th><th>Czas Trwania</th></tr>';
+                tabela += '<tr><th>Imię</th><th>Nazwisko</th><th>Telefon</th></tr>';
 
-                for (var i = 0; i < cennik.length; i++) {
+                for (var i = 0; i < fryzjerzy.length; i++) {
                     tabela += '<tr>';
-                    tabela += '<td>' + cennik[i].nazwa + '</td>';
-                    tabela += '<td>' + cennik[i].cena + ' zł</td>';
-                    tabela += '<td>' + cennik[i].czas_trwania + ' min</td>';
+                    tabela += '<td>' + fryzjerzy[i].imie + '</td>';
+                    tabela += '<td>' + fryzjerzy[i].nazwisko + '</td>';
+                    tabela += '<td>' + fryzjerzy[i].telefon + '</td>';
                     tabela += '</tr>';
                 }
 
@@ -113,7 +113,7 @@
             }
 
             // Wywołanie funkcji do generowania tabeli
-            generujTabeleCennika();
+            generujTabeleKontektow();
         </script>
 
     </div>

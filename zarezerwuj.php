@@ -32,6 +32,7 @@ if ($connection->connect_error) {
     exit;
 }
 
+
 $sql = "SELECT WIZYTA_ID, fryzjer.NAZWISKO, usluga.NAZWA from wizyta,fryzjer,usluga where ROK=$rok AND DZIEN=$dzien AND MIESIAC=$miesiac AND GODZINA=$godzina AND MINUTA=$minuta AND fryzjer.NAZWISKO = '$fryzjer' AND fryzjer.FRYZJER_ID=wizyta.FRYZJER_ID AND usluga.USLUGA_ID = wizyta.USLUGA_ID";
 $result = @$connection->query($sql);
 if (!$result) {
@@ -44,7 +45,7 @@ if (!$result) {
 }
 
 if ($result->num_rows > 0) {
-    $_SESSION['error'] = 'Termin już zajęty'.$fryzjer;
+    $_SESSION['error'] = 'Termin już zajęty' . $fryzjer;
 
     $result->free_result();
     $connection->close();
@@ -235,7 +236,7 @@ if ($klient_id == "") {
     $klient_id = $row['KLIENT_ID'];
 }
 
-$sql = "Select FRYZJER_ID from fryzjer where nazwisko = '$fryzjer'";
+$sql = "SELECT FRYZJER_ID from fryzjer where nazwisko = '$fryzjer'";
 $result = @$connection->query($sql);
 if (!$result) {
     $result->free_result();
@@ -250,7 +251,7 @@ $row = $result->fetch_assoc();
 $fryzjer_id = $row['FRYZJER_ID'];
 echo "Fryzjer_id: $fryzjer_id<br>";
 
-$sql = "Select USLUGA_ID from usluga where nazwa = '$usluga'";
+$sql = "SELECT USLUGA_ID, CZAS_TRWANIA from usluga where nazwa = '$usluga'";
 $result = @$connection->query($sql);
 if (!$result) {
     $result->free_result();
@@ -262,22 +263,35 @@ if (!$result) {
 
 $row = $result->fetch_assoc();
 $usluga_id = $row['USLUGA_ID'];
+$czas_trwania = $row['CZAS_TRWANIA'];
 $result->free_result();
 
-if ($fryzjer_id != "" && $usluga_id != "") {
-    $sql = "INSERT INTO WIZYTA (DZIEN, MIESIAC, ROK, GODZINA, MINUTA, ZATWIERDZONA, KLIENT_ID, FRYZJER_ID, USLUGA_ID) VALUES ($dzien, $miesiac, $rok, $godzina, $minuta, 'false', $klient_id, $fryzjer_id, $usluga_id)";
+$ile_godzin = $czas_trwania / 60;
+$j = 0;
 
-    if (@$connection->query($sql) === TRUE) {
-        $connection->close();
-        $_SESSION['error'] = 'Rezerwacja udana';
-        header('Location: index.php');
-    } else {
-        $connection->close();
-        echo "Nie udało się dodać wizyy";
-        $_SESSION['error'] = 'Nie udało się dodać wizyty';
-        header('Location: index.php');
+for ($i = 0; $i < $ile_godzin; $i++) {
+    $godzina += $j;
+    $j++;
+
+    if ($fryzjer_id != "" && $usluga_id != "") {
+        $sql = "INSERT INTO WIZYTA (DZIEN, MIESIAC, ROK, GODZINA, MINUTA, ZATWIERDZONA, KLIENT_ID, FRYZJER_ID, USLUGA_ID) VALUES ($dzien, $miesiac, $rok, $godzina, $minuta, 'false', $klient_id, $fryzjer_id, $usluga_id)";
+
+        if (@$connection->query($sql) === TRUE) {
+
+        } else {
+            $connection->close();
+            echo "Nie udało się dodać wizyy";
+            $_SESSION['error'] = 'Nie udało się dodać wizyty';
+            header('Location: index.php');
+            exit;
+        }
     }
 }
+
+$connection->close();
+$_SESSION['error'] = 'Rezerwacja udana';
+header('Location: index.php');
+
 
 
 

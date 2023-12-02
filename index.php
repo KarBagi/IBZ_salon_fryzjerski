@@ -73,6 +73,14 @@ session_start();
                     </tr>
                     <tr>
                         <td>
+                            <div class="modalLi">Czas trwania:</div>
+                        </td>
+                        <td>
+                        <input type="value" name="czas_trwania" id="czas_trwania" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <div class="modalLi">Imię: </div>
                         </td>
                         <td><input type="text" name="imie" id="imie"></td>
@@ -115,11 +123,13 @@ session_start();
 
         <div class="navbarMenu">
             <a href="index.php">Strona główna</a>
-            <a href="#news">Aktualności</a>
             <a href="cennik.php">Cennik</a>
-            <a href="#kontakt">Kontakt</a>
-            <a href="panel.html">Panel Administratora</a>
+            <a href="kontakt.php">Kontakt</a>
+            <a href="panel.php">Panel Administratora</a>
+            <a href="kalendarzFryzjer.php">Widok pracownika</a>
         </div>
+
+        
 
     </div>
     <div id="calendar">
@@ -180,7 +190,7 @@ session_start();
                 <div class="day" id="monday-date"></div>
                 <div class="hour" day="0" hour="8" onclick="openModal(0,8,this)">Wolne</div>
                 <div class="hour" day="0" hour="9" onclick="openModal(0,9,this)">Wolne</div>
-                <div class="hour" day="0" hour="8" onclick="openModal(0,10,this)">Wolne</div>
+                <div class="hour" day="0" hour="10" onclick="openModal(0,10,this)">Wolne</div>
                 <div class="hour" day="0" hour="11" onclick="openModal(0,11,this)">Wolne</div>
                 <div class="hour" day="0" hour="12" onclick="openModal(0,12,this)">Wolne</div>
                 <div class="hour" day="0" hour="13" onclick="openModal(0,13,this)">Wolne</div>

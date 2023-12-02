@@ -35,6 +35,7 @@ function onLoad() {
     showWorkers();
 }
 
+//=========  CALENDAR SCRIPTS =============
 
 function updateCurrentWeek(now) {
     const dateElement = document.getElementById('date');
@@ -167,17 +168,7 @@ function addDays(date, days) {
     return result;
 }
 
-function openErrorModal() {
-    const modalBackground = document.getElementById('errorModalBackground');
-    modalBackground.style.display = 'block';
-    modalBackground.style.zIndex = 3;
-}
-
-function closeErrorModal() {
-    const modalBackground = document.getElementById('errorModalBackground');
-    modalBackground.style.display = 'none';
-}
-
+//=========  MODAL SCRIPTS =============
 function openModal(day, hour) {
 
     const modalBackground = document.getElementById('modalBackground');
@@ -231,16 +222,17 @@ function openModal(day, hour) {
         document.getElementById("id_wizyty").value = wyswietlana_wizyta.id_wizyty;
 }
 
-
-
 function closeModal() {
     const modalBackground = document.getElementById('modalBackground');
     modalBackground.style.display = 'none';
 }
 
+
+//=========  FILTERING SCRIPTS =============
+
 function showWorkers() {
     var workerSelect = document.getElementById("calendar_filter");
-
+    
     fryzjerzy.forEach(fryzjer => {
         var option = document.createElement("option");
         option.text = fryzjer;

@@ -127,10 +127,9 @@ session_start();
 
         <div class="navbarMenu">
             <a href="index.php">Strona główna</a>
-            <a href="#news">Aktualności</a>
             <a href="cennik.php">Cennik</a>
-            <a href="#kontakt">Kontakt</a>
-            <a href="panel.html">Panel Administratora</a>
+            <a href="kontakt.php">Kontakt</a>
+            <a href="panel.php">Panel Administratora</a>
         </div>
 
     </div>

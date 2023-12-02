@@ -99,6 +99,7 @@
         .td {
             padding: 8px 20px 8px 20px;
             display: table-cell;
+            width: min-content;
             border: 1px solid #bababa;
         }
 
@@ -148,10 +149,6 @@
             margin: 30px;
         }
 
-        input {
-            width: 80%;
-        }
-
         input[type="text"],
         input[type="value"] {
             border: 1px solid blue;
@@ -176,10 +173,10 @@
 
         <div class="navbarMenu">
             <a href="index.php">Strona główna</a>
-            <a href="#news">Aktualności</a>
             <a href="cennik.php">Cennik</a>
-            <a href="#kontakt">Kontakt</a>
-            <a href="panel.html">Panel Administratora</a>
+            <a href="kontakt.php">Kontakt</a>
+            <a href="panel.php">Panel Administratora</a>
+            <a href="kalendarzFryzjer.php">kalendarz Fryzjera</a>
         </div>
 
     </div>
@@ -188,12 +185,16 @@
 
         <button class="accordion">Dodaj fryzjera</button>
         <div class="form-container">
-            <form class="admin-form" action="dodajFryzjera.php">
-                <input type="text" name="imie" placeholder="imię" required>
-                <input type="text" name="nazwisko" placeholder="nazwisko" required>
-                <input type="text" name="telefon" placeholder="telefon" required>
-                <input type="submit" value="Dodaj fryzjera">
-            </form>
+            <div class="table admin-form">
+                <div class="tr">
+                    <form class="admin-form" action="dodajFryzjera.php">
+                        <div class="td"><input type="text" name="imie" placeholder="imię" required></div>
+                        <div class="td"><input type="text" name="nazwisko" placeholder="nazwisko" required></div>
+                        <div class="td"><input type="text" name="telefon" placeholder="telefon" required></div>
+                        <div class="td"><input type="submit" value="Dodaj fryzjera"></div>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <button class="accordion">Dodaj usługę do fryzjera</button>
@@ -204,33 +205,33 @@
                 <input type="submit" value="Dodaj">
             </form>
             <script>
-                    function pokazFryzjerow() {
-                        var select = document.getElementById("fryzjerzySelect");
-                        for (var i = 0; i < fryzjerzy.length; i++) {
-                            if(fryzjerzy[i].zatrudniony==1)
-                            {var option = document.createElement("option");
+                function pokazFryzjerow() {
+                    var select = document.getElementById("fryzjerzySelect");
+                    for (var i = 0; i < fryzjerzy.length; i++) {
+                        if (fryzjerzy[i].zatrudniony == 1) {
+                            var option = document.createElement("option");
                             option.value = fryzjerzy[i].id;
-                            option.text = fryzjerzy[i].imie+" "+fryzjerzy[i].nazwisko;
+                            option.text = fryzjerzy[i].imie + " " + fryzjerzy[i].nazwisko;
                             select.add(option);
-                            }
                         }
                     }
+                }
 
-                    function pokazUslugi() {
-                        var select = document.getElementById("uslugi");
-                        for (var i = 0; i < cennik.length; i++) {
-                            if(cennik[i].aktywna==1)
-                            {var option = document.createElement("option");
+                function pokazUslugi() {
+                    var select = document.getElementById("uslugi");
+                    for (var i = 0; i < cennik.length; i++) {
+                        if (cennik[i].aktywna == 1) {
+                            var option = document.createElement("option");
                             option.value = cennik[i].id;
                             option.text = cennik[i].nazwa;
                             select.add(option);
-                            }
                         }
                     }
+                }
 
-                    pokazFryzjerow();
-                    pokazUslugi();
-                </script>
+                pokazFryzjerow();
+                pokazUslugi();
+            </script>
         </div>
 
         <button class="accordion">Usuń fryzjera</button>
@@ -273,7 +274,6 @@
                         tabela += '<div class="td"><input type="text" id="nazwa" name="nazwa" value="' + cennik[i].nazwa + '" required></div>';
                         tabela += '<div class="td"><input type="value" id="cena" name="cena" value="' + cennik[i].cena + '" required> zł</div>';
                         tabela += '<div class="td"><input type="value" id="czas" name="czas" value="' + cennik[i].czas_trwania + '" required> min</div>';
-                        tabela += '<div class="td"><input type="value" id="aktywna" name="aktywna" value="' + cennik[i].aktywna + '" required></div>';
                         tabela += '<div class="td"><input type="submit" value="Zapisz"></div>';
                         tabela += '</form>';
                     }
@@ -288,17 +288,20 @@
 
         <button class="accordion">Dodaj usługę</button>
         <div class="form-container">
-            <form class="admin-form" action="dodajUsluge.php">
-
-                <input type="text" name="nazwa" placeholder="nazwa" required>
-                <input type="value" name="cena" placeholder="cena" required>
-                <input type="value" name="czas" placeholder="czas trwania" required>
-                <input type="submit" value="Dodaj usługę">
-            </form>
+            <div class="table admin-form">
+                <div class="tr">
+                    <form class="admin-form" action="dodajUsluge.php">
+                        <div class="td"><input type="text" name="nazwa" placeholder="nazwa" required></div>
+                        <div class="td"><input type="value" name="cena" placeholder="cena" required></div>
+                        <div class="td"><input type="value" name="czas" placeholder="czas trwania" required></div>
+                        <div class="td"><input type="submit" value="Dodaj usługę"></div>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <button class="accordion">Usuń usługę</button>
-        <div class="form-container" id="uslugi">
+        <div class="form-container" id="doUsuniecia">
             <script>
                 function generujTabeleUslug() {
                     var tabela = '<div class="table admin-form">';
@@ -316,7 +319,7 @@
                     }
 
                     tabela += '</div>';
-                    document.getElementById("uslugi").innerHTML += tabela;
+                    document.getElementById("doUsuniecia").innerHTML += tabela;
                 }
 
                 generujTabeleUslug();
