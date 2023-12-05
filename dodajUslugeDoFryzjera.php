@@ -1,12 +1,12 @@
 <?php
 
-if ($_GET["fryzjer"] == "" || $_GET["usluga"] == "") {
+if ($_POST["fryzjer"] == "" || $_POST["usluga"] == "") {
     header("Location: panel.php");
     exit;
 }
 
-$id_fryzjera = $_GET["fryzjer"];
-$id_uslugi = $_GET["usluga"];
+$id_fryzjera = $_POST["fryzjer"];
+$id_uslugi = $_POST["usluga"];
 
 require_once "dbconnect.php";
 $connection = @new mysqli($host, $user, $password, $database);
