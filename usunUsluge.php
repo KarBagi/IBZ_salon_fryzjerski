@@ -1,11 +1,11 @@
 <?php
 
-if ($_GET["id"] == "") {
+if ($_POST["id"] == "") {
     header("Location: panel.php");
     exit;
 }
 
-$id_uslugi = $_GET["id"];
+$id_uslugi = $_POST["id"];
 
 require_once "dbconnect.php";
 $connection = @new mysqli($host, $user, $password, $database);
