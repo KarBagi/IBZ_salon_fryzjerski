@@ -243,7 +243,7 @@
 
                     for (var i = 0; i < fryzjerzy.length; i++) {
                         if (fryzjerzy[i].zatrudniony == 1) {
-                            tabela += '<form class="tr" action="usunFryzjera.php" method="get">';
+                            tabela += '<form class="tr" action="usunFryzjera.php" method="post">';
                             tabela += '<input type="hidden" id="id_fryzjera" name="id" value="' + fryzjerzy[i].id + '">';
                             tabela += '<div class="td">' + fryzjerzy[i].imie + '</div>';
                             tabela += '<div class="td">' + fryzjerzy[i].nazwisko + '</div>';
@@ -269,7 +269,7 @@
                     tabela += '<div class="td th">Nazwa</div><div class="td th">Cena</div><div class="td th">Czas trwania</div><div class="td th">Aktywna</div>'
 
                     for (var i = 0; i < cennik.length; i++) {
-                        tabela += '<form class="tr" action="zmienCennik.php" method="get">';
+                        tabela += '<form class="tr" action="zmienCennik.php" method="post">';
                         tabela += '<input type="hidden" id="id_uslugi" name="id" value="' + cennik[i].id + '">';
                         tabela += '<div class="td"><input type="text" id="nazwa" name="nazwa" value="' + cennik[i].nazwa + '" required></div>';
                         tabela += '<div class="td"><input type="value" id="cena" name="cena" value="' + cennik[i].cena + '" required> zł</div>';
@@ -309,7 +309,7 @@
 
                     for (var i = 0; i < cennik.length; i++) {
                         if (cennik[i].aktywna == 1) {
-                            tabela += '<form class="tr" action="usunUsluge.php" method="get">';
+                            tabela += '<form class="tr" action="usunUsluge.php" method="post">';
                             tabela += '<input type="hidden" id="id_uslugi" name="id" value="' + cennik[i].id + '">';
                             tabela += '<div class="td">' + cennik[i].nazwa + '</div>';
                             tabela += '<div class="td"><input type="submit" value="Usuń"></div>';
