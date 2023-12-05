@@ -1,13 +1,13 @@
 <?php
 
-if ($_GET["nazwa"] == "" || $_GET["cena"] == "" || $_GET["czas"] == "") {
+if ($_POST["nazwa"] == "" || $_POST["cena"] == "" || $_POST["czas"] == "") {
     header("Location: panel.php");
     exit;
 }
 
-$nazwa = $_GET["nazwa"];
-$cena = $_GET["cena"];
-$czas = $_GET["czas"];
+$nazwa = $_POST["nazwa"];
+$cena = $_POST["cena"];
+$czas = $_POST["czas"];
 
 require_once "dbconnect.php";
 $connection = @new mysqli($host, $user, $password, $database);
