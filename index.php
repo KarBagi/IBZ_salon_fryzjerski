@@ -46,7 +46,7 @@ session_start();
 
         <div class="modal">
             <h2>Rezerwacja usługi</h2>
-            <form action="zarezerwuj.php" id="modalForm" method="get" onsubmit="return saveModal()">
+            <form action="zarezerwuj.php" id="modalForm" method="post" onsubmit="return saveModal()">
                 <table>
 
                     <tr>
