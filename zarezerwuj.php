@@ -3,24 +3,24 @@ session_start();
 // error_reporting(0);
 
 
-if (!isset($_GET["termin"]) || !isset($_GET["czas"]) || !isset($_GET["imie"]) || !isset($_GET["nazwisko"]) || !isset($_GET["fryzjer"]) || !isset($_GET["usluga"])) {
+if (!isset($_POST["termin"]) || !isset($_POST["czas"]) || !isset($_POST["imie"]) || !isset($_POST["nazwisko"]) || !isset($_POST["fryzjer"]) || !isset($_POST["usluga"])) {
     header("Location: index.php");
     exit;
 }
 
 //odczytane dane
-$termin = $_GET["termin"];
-$czas = $_GET["czas"];
+$termin = $_POST["termin"];
+$czas = $_POST["czas"];
 list($godzina, $minuta) = explode(":", $czas);
-$imie = $_GET["imie"];
-$nazwisko = $_GET["nazwisko"];
-$fryzjer = $_GET["fryzjer"];
+$imie = $_POST["imie"];
+$nazwisko = $_POST["nazwisko"];
+$fryzjer = $_POST["fryzjer"];
 $fryzjer_id = "";
-$usluga = $_GET["usluga"];
+$usluga = $_POST["usluga"];
 $usluga_id = "";
 $klient_id = "";
 list($rok, $miesiac, $dzien) = explode("-", $termin);
-$dzien_tygodnia = $_GET['dzien_tygodnia'];
+$dzien_tygodnia = $_POST['dzien_tygodnia'];
 
 require_once "dbconnect.php";
 $connection = @new mysqli($host, $user, $password, $database);
@@ -64,14 +64,14 @@ $phone = "";
 $email = "";
 
 // Sprawdź, czy parametr phone został przesłany
-if ($_GET["phone"] != "") {
-    $phone = $_GET["phone"];
+if ($_POST["phone"] != "") {
+    $phone = $_POST["phone"];
     echo "Numer telefonu: $phone<br>";
 }
 
 // Sprawdź, czy parametr email został przesłany
-if ($_GET["email"] != "") {
-    $email = $_GET["email"];
+if ($_POST["email"] != "") {
+    $email = $_POST["email"];
     echo "Email: $email<br>";
 }
 
@@ -97,7 +97,7 @@ if ($phone != "" && $email == "") {
 }
 
 //jeżeli jest sam email szukamy po emailu
-if ($email != "" && $_GET["phone"] != "") {
+if ($email != "" && $_POST["phone"] != "") {
     echo "Szukam po emailu<br>";
     $sql = "SELECT KLIENT_ID from klient where nazwisko = '$nazwisko' AND imie='$imie' AND EMAIL='$email'";
     $result = @$connection->query($sql);
