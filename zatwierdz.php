@@ -1,11 +1,11 @@
 <?php
 
-if ($_GET["id_wizyty"] == "") {
+if ($_POST["id_wizyty"] == "") {
     header("Location: kalendarzFryzjer.php");
     exit;
 }
 
-$id_wizyty = $_GET["id_wizyty"];
+$id_wizyty = $_POST["id_wizyty"];
 
 require_once "dbconnect.php";
 $connection = @new mysqli($host, $user, $password, $database);
