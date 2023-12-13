@@ -1,0 +1,213 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Dec 01, 2023 at 10:33 PM
+-- Wersja serwera: 10.4.32-MariaDB
+-- Wersja PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `ibz`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `fryzjer`
+--
+
+CREATE TABLE `fryzjer` (
+  `FRYZJER_ID` int(11) NOT NULL,
+  `IMIE` text NOT NULL,
+  `NAZWISKO` text NOT NULL,
+  `NUMER_KONTAKTOWY` text NOT NULL,
+  `ZATRUDNIONY` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Dumping data for table `fryzjer`
+--
+
+INSERT INTO `fryzjer` (`FRYZJER_ID`, `IMIE`, `NAZWISKO`, `NUMER_KONTAKTOWY`, `ZATRUDNIONY`) VALUES
+(1, 'Mateusz', 'Szulc', '8346185103', 1),
+(2, 'Karol', 'Bagiński', '123456789', 1),
+(3, 'Bartosz', 'Kipa', '987654321', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `klient`
+--
+
+CREATE TABLE `klient` (
+  `KLIENT_ID` int(11) NOT NULL,
+  `IMIE` text NOT NULL,
+  `NAZWISKO` text NOT NULL,
+  `NUMER_TELEFONU` text DEFAULT NULL,
+  `EMAIL` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `specjalizacja_fryzjer`
+--
+
+CREATE TABLE `specjalizacja_fryzjer` (
+  `SPECJALIZACJA_ID` int(11) NOT NULL,
+  `FRYZJER_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Dumping data for table `specjalizacja_fryzjer`
+--
+
+INSERT INTO `specjalizacja_fryzjer` (`SPECJALIZACJA_ID`, `FRYZJER_ID`) VALUES
+(1, 1),
+(1, 2),
+(2, 1),
+(2, 2),
+(3, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `usluga`
+--
+
+CREATE TABLE `usluga` (
+  `USLUGA_ID` int(11) NOT NULL,
+  `NAZWA` text NOT NULL,
+  `CENA` decimal(10,0) NOT NULL,
+  `CZAS_TRWANIA` int(11) NOT NULL,
+  `AKTYWNA` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Dumping data for table `usluga`
+--
+
+INSERT INTO `usluga` (`USLUGA_ID`, `NAZWA`, `CENA`, `CZAS_TRWANIA`, `AKTYWNA`) VALUES
+(1, 'strzyżenie męskie', 30, 60, 1),
+(2, 'strzyżenie damskie', 60, 60, 1),
+(3, 'farbowanie', 150, 180, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `wizyta`
+--
+
+CREATE TABLE `wizyta` (
+  `WIZYTA_ID` int(11) NOT NULL,
+  `ROK` int(11) NOT NULL,
+  `MIESIAC` int(11) NOT NULL,
+  `DZIEN` int(11) NOT NULL,
+  `GODZINA` int(11) NOT NULL,
+  `MINUTA` int(11) NOT NULL,
+  `ZATWIERDZONA` tinyint(1) NOT NULL,
+  `KLIENT_ID` int(11) NOT NULL,
+  `FRYZJER_ID` int(11) NOT NULL,
+  `USLUGA_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Indeksy dla zrzutów tabel
+--
+
+--
+-- Indeksy dla tabeli `fryzjer`
+--
+ALTER TABLE `fryzjer`
+  ADD PRIMARY KEY (`FRYZJER_ID`);
+
+--
+-- Indeksy dla tabeli `klient`
+--
+ALTER TABLE `klient`
+  ADD PRIMARY KEY (`KLIENT_ID`);
+
+--
+-- Indeksy dla tabeli `specjalizacja_fryzjer`
+--
+ALTER TABLE `specjalizacja_fryzjer`
+  ADD KEY `FRYZJER_ID` (`FRYZJER_ID`),
+  ADD KEY `specjalizacja_fryzjer_ibfk_2` (`SPECJALIZACJA_ID`);
+
+--
+-- Indeksy dla tabeli `usluga`
+--
+ALTER TABLE `usluga`
+  ADD PRIMARY KEY (`USLUGA_ID`);
+
+--
+-- Indeksy dla tabeli `wizyta`
+--
+ALTER TABLE `wizyta`
+  ADD PRIMARY KEY (`WIZYTA_ID`),
+  ADD KEY `FRYZJER_ID` (`FRYZJER_ID`),
+  ADD KEY `KLIENT_ID` (`KLIENT_ID`),
+  ADD KEY `USLUGA_ID` (`USLUGA_ID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `fryzjer`
+--
+ALTER TABLE `fryzjer`
+  MODIFY `FRYZJER_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `klient`
+--
+ALTER TABLE `klient`
+  MODIFY `KLIENT_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `usluga`
+--
+ALTER TABLE `usluga`
+  MODIFY `USLUGA_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `wizyta`
+--
+ALTER TABLE `wizyta`
+  MODIFY `WIZYTA_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `specjalizacja_fryzjer`
+--
+ALTER TABLE `specjalizacja_fryzjer`
+  ADD CONSTRAINT `specjalizacja_fryzjer_ibfk_1` FOREIGN KEY (`FRYZJER_ID`) REFERENCES `fryzjer` (`FRYZJER_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `specjalizacja_fryzjer_ibfk_2` FOREIGN KEY (`SPECJALIZACJA_ID`) REFERENCES `usluga` (`USLUGA_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `wizyta`
+--
+ALTER TABLE `wizyta`
+  ADD CONSTRAINT `wizyta_ibfk_1` FOREIGN KEY (`FRYZJER_ID`) REFERENCES `fryzjer` (`FRYZJER_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `wizyta_ibfk_2` FOREIGN KEY (`KLIENT_ID`) REFERENCES `klient` (`KLIENT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `wizyta_ibfk_3` FOREIGN KEY (`USLUGA_ID`) REFERENCES `usluga` (`USLUGA_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
